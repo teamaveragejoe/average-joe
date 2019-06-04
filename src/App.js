@@ -6,7 +6,7 @@ class App extends Component {
     super();
 
     this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
-    
+
     // set initial location (blank)
     this.state = {
       base: '',
@@ -16,7 +16,7 @@ class App extends Component {
       // mapMarkers: [],
       mapImageURL: '',
       destination: '',
-    }
+    };
   }
 
   handleInput = (e) => {
@@ -39,10 +39,11 @@ class App extends Component {
   }
 
   streetArrayToString = () => {
+    console.log(this.state.searchResults);
     return this.state.searchResults.reduce((result, current) => {
       return result + '||' + current.displayString.slice(current.name.length + 2);
     }, '').substring(2).replace('#', ' ');
-   }
+  }
 
   reverseGeo = async (location) => {
     try {
@@ -56,7 +57,7 @@ class App extends Component {
       this.setState({
         base: data.data.results[0].locations[0].street
       })
-    } catch(err) {
+    } catch (err) {
       console.log("Cannot reverse geo location.");
     }
   }
@@ -72,34 +73,39 @@ class App extends Component {
           pageSize: 50,
         }
       })
+
       this.setState({
         searchResults: data.data.results
       })
-      // console.log(this.state.searchResults)
 
-      console.log(this.streetArrayToString());
+      // console.log(this.streetArrayToString());
 
-      this.getMapImage(this.streetArrayToString())
+      this.getMapImage(this.streetArrayToString(), null);
 
     } catch (err) {
       console.log("Cannot perform search.");
     }
   }
 
-  getMapImage = async (locations) => {
+  getMapImage = async (locations, destination) => {
     try {
-      const data = await Axios.get("https://www.mapquestapi.com/staticmap/v5/map", {
+      const data = await Axios({
+        method: 'GET',
+        url: 'https://www.mapquestapi.com/staticmap/v5/map',
+        responseType: 'blob',
         params: {
+          key: this.key,
           start: this.state.base,
-          end: this.state.destination,
+          end: destination,
           locations: locations,
           scalebar: 'true|bottom',
+          zoom: 12,
           shape: 'radius:10km|' + this.state.base,
         }
       })
 
-      this.state ({
-        mapImageURL: data.data
+      this.setState({
+        mapImageURL: URL.createObjectURL(data.data)
       })
     } catch (err) {
       console.log("Cannot generate map.");
@@ -114,8 +120,8 @@ class App extends Component {
         <form>
           <h2>Where are you?</h2>
           <input
-            type="text" 
-            name="base" 
+            type="text"
+            name="base"
             placeholder="e.g. 483 Queen St W, Toronto, ON"
             value={this.state.base}
             onChange={this.handleInput} />
@@ -131,7 +137,7 @@ class App extends Component {
         </form>
 
         <div className="map-markers">
-          <img src={this.state.mapImageURL}></img>
+          <img src={this.state.mapImageURL} />
         </div>
       </div>
     );
