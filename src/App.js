@@ -7,8 +7,14 @@ class App extends Component {
 
     this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
     
+    // set initial location (blank)
     this.state = {
-      base: [],
+      base: '',
+      search: '',
+      baseGeoLocation: [],
+      searchResults: [],
+      mapMarkers: [],
+      getMapImage: [],
     }
   }
 
@@ -18,12 +24,12 @@ class App extends Component {
     });
   }
 
+  // using the navigator object, fetch user's browser location
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        // this.setState({
-        //   base: [position.coords.latitude, position.coords.longitude]
-        // });
+        // use long and lat input to return user's location in street address form
+        this.setState({ baseGeoLocation: [position.coords.latitude, position.coords.longitude] })
         this.reverseGeo(`${position.coords.latitude},${position.coords.longitude}`);
       });
     } else {
@@ -39,12 +45,52 @@ class App extends Component {
           location: location
         }
       });
-      
+      // set current location as base
       this.setState({
         base: data.data.results[0].locations[0].street
       })
     } catch(err) {
       console.log("Cannot reverse geo location.");
+    }
+  }
+
+  search = async () => {
+    try {
+      const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
+        params: {
+          key: this.key,
+          sort: 'relevance',
+          circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
+          q: this.state.search,
+          pageSize: 50,
+        }
+      })
+      this.setState({
+        searchResults: data.data.results
+      })
+      console.log(this.state.searchResults)
+    } catch (err) {
+      console.log("Cannot perform search.");
+    }
+  }
+
+  getMapImage = async () => {
+    try {
+      const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
+        params: {
+          key: this.key,
+          sort: 'relevance',
+          circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
+          q: this.state.search,
+          pageSize: 50,
+        }
+      })
+      this.setState({
+        searchResults: data.data.results
+      })
+      console.log(this.state.searchResults)
+    } catch (err) {
+      console.log("Cannot perform search.");
     }
   }
 
@@ -54,15 +100,27 @@ class App extends Component {
         <h1>Average Joe</h1>
 
         <form>
+          <h2>Where are you?</h2>
           <input
             type="text" 
             name="base" 
-            placeholder="Starting Location"
+            placeholder="e.g. 483 Queen St W, Toronto, ON"
             value={this.state.base}
             onChange={this.handleInput} />
           <button type="button" onClick={this.getCurrentLocation}>Current Location</button>
+          <h2>Where would you like to go?</h2>
+          <input
+            type="text"
+            name="search"
+            placeholder="e.g. cafes, Tim Horton's"
+            value={this.state.search}
+            onChange={this.handleInput} />
+          <button type="button" id="submit-search" onClick={this.search}>Submit</button>
         </form>
 
+        <div className="map-markers">
+          <img src={this.state.mapMarkers}></img>
+        </div>
       </div>
     );
   }
