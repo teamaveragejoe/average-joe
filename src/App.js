@@ -13,8 +13,9 @@ class App extends Component {
       search: '',
       baseGeoLocation: [],
       searchResults: [],
-      mapMarkers: [],
-      getMapImage: [],
+      // mapMarkers: [],
+      mapImageURL: '',
+      destination: '',
     }
   }
 
@@ -36,6 +37,12 @@ class App extends Component {
       console.log("Geolocation is not supported by this browser.");
     }
   }
+
+  streetArrayToString = () => {
+    return this.state.searchResults.reduce((result, current) => {
+      return result + '||' + current.displayString.slice(current.name.length + 2);
+    }, '').substring(2).replace('#', ' ');
+   }
 
   reverseGeo = async (location) => {
     try {
@@ -68,29 +75,34 @@ class App extends Component {
       this.setState({
         searchResults: data.data.results
       })
-      console.log(this.state.searchResults)
+      // console.log(this.state.searchResults)
+
+      console.log(this.streetArrayToString());
+
+      this.getMapImage(this.streetArrayToString())
+
     } catch (err) {
       console.log("Cannot perform search.");
     }
   }
 
-  getMapImage = async () => {
+  getMapImage = async (locations) => {
     try {
-      const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
+      const data = await Axios.get("https://www.mapquestapi.com/staticmap/v5/map", {
         params: {
-          key: this.key,
-          sort: 'relevance',
-          circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
-          q: this.state.search,
-          pageSize: 50,
+          start: this.state.base,
+          end: this.state.destination,
+          locations: locations,
+          scalebar: 'true|bottom',
+          shape: 'radius:10km|' + this.state.base,
         }
       })
-      this.setState({
-        searchResults: data.data.results
+
+      this.state ({
+        mapImageURL: data.data
       })
-      console.log(this.state.searchResults)
     } catch (err) {
-      console.log("Cannot perform search.");
+      console.log("Cannot generate map.");
     }
   }
 
@@ -119,7 +131,7 @@ class App extends Component {
         </form>
 
         <div className="map-markers">
-          <img src={this.state.mapMarkers}></img>
+          <img src={this.state.mapImageURL}></img>
         </div>
       </div>
     );
