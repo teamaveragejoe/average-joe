@@ -9,7 +9,7 @@ class App extends Component {
 
     // set initial location (blank)
     this.state = {
-      base: '',
+      base: '481 Queen St W',
       search: '',
       baseGeoLocation: [],
       searchResults: [],
@@ -19,12 +19,14 @@ class App extends Component {
     };
   }
 
+  // generic input setter
   handleInput = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
 
+  // set destination to the address selected and display the route map from base to destination
   setDestination = (e) => {
     console.log(e.target.value)
     // console.log(e.target.value.slice(e.target.value.length + 2)
@@ -55,12 +57,22 @@ class App extends Component {
   //   }
   // }
 
+  // convert an array of addresses into one string of a required format
+  streetArrayToString = () => {
+    return this.state.searchResults.reduce((result, current) => {
+      return result + '||' + current.displayString.slice(current.name.length + 2);
+    }, '').substring(2).replace('#', ' ');
+  }
+
   // using the navigator object, fetch user's browser location
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        // use long and lat input to return user's location in street address form
-        this.setState({ baseGeoLocation: [position.coords.latitude, position.coords.longitude] })
+        // get and store the lat and lng of the user's current location
+        this.setState({ 
+          baseGeoLocation: [position.coords.latitude, position.coords.longitude] 
+        })
+        // convert the lat and lng to an address
         this.reverseGeo(`${position.coords.latitude},${position.coords.longitude}`);
       });
     } else {
@@ -68,38 +80,32 @@ class App extends Component {
     }
   }
 
+  // Given an address, convert the address to [lat, lng] and store it in baseGeoLocation
   geoLocation = async (location) => {
     try {
       const data = await Axios.get("http://www.mapquestapi.com/geocoding/v1/address", {
         params: {
-          key: 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5',
+          key: this.key,
           location: location
         }
       });
-      console.log(data)
-      data = data.data.results[0].locations.displayLatLng;
+
+      const latLng = data.data.results[0].locations[0].latLng;
       this.setState({
-        baseGeoLocation: [data.lat, data.lng]
+        baseGeoLocation: [latLng.lat, latLng.lng]
       })
-      console.log("Latitude and Longitude:")
-      console.log(this.state.baseGeoLocation)
     } catch (err) {
       console.log("Cannot get geo location.");
     }
   }
-  
 
-  streetArrayToString = () => {
-    return this.state.searchResults.reduce((result, current) => {
-      return result + '||' + current.displayString.slice(current.name.length + 2);
-    }, '').substring(2).replace('#', ' ');
-  }
-
+  // Given a string in the form of 'lat,lng' representing a lat and lng, covert it to
+  // an address and store it in base
   reverseGeo = async (location) => {
     try {
       const data = await Axios.get("http://www.mapquestapi.com/geocoding/v1/reverse", {
         params: {
-          key: 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5',
+          key: this.key,
           location: location
         }
       });
@@ -112,18 +118,20 @@ class App extends Component {
     }
   }
 
+  // search a place of interest and display a list of the results as well as a map
+  // marking said results
   search = async () => {
     try {
       if (this.state.base) {
-        console.log("This shows the base state")
-        console.log(this.state.base);
-        this.geoLocation(this.state.base)
+        console.log("In game!", this.state.base);
+        await this.geoLocation(this.state.base);
       }
+
       const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
         params: {
           key: this.key,
           sort: 'relevance',
-          // circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
+          circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
           q: this.state.search,
           pageSize: 20
         }
@@ -133,8 +141,6 @@ class App extends Component {
         searchResults: data.data.results
       })
 
-      // console.log(this.streetArrayToString());
-
       this.getMapImage(this.streetArrayToString(), null);
 
     } catch (err) {
@@ -142,6 +148,7 @@ class App extends Component {
     }
   }
 
+  // get and set the map image url given and stored info
   getMapImage = async (locations, destination) => {
     try {
       const data = await Axios({
@@ -159,7 +166,6 @@ class App extends Component {
           size: '800,800'
         }
       })
-      // console.log(data)
       this.setState({
         mapImageURL: URL.createObjectURL(data.data)
       })
@@ -195,6 +201,7 @@ class App extends Component {
         <div className="map-markers">
           <img src={this.state.mapImageURL} />
         </div>
+
         <div className="location-list">
           {this.state.searchResults.map(location => {
             let address = location.displayString.slice(location.name.length +2);
