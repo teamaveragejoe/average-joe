@@ -28,14 +28,10 @@ class App extends Component {
 
   // set destination to the address selected and display the route map from base to destination
   setDestination = (e) => {
-    console.log(e.target.value)
-    // console.log(e.target.value.slice(e.target.value.length + 2)
-
     this.setState({
       destination: e.target.value
     }, () => {
-      console.log(this.state.destination);
-      this.getMapImage(null, this.state.destination)
+      this.getRouteMapImage();
     })
   }
 
@@ -123,7 +119,6 @@ class App extends Component {
   search = async () => {
     try {
       if (this.state.base) {
-        console.log("In game!", this.state.base);
         await this.geoLocation(this.state.base);
       }
 
@@ -141,15 +136,15 @@ class App extends Component {
         searchResults: data.data.results
       })
 
-      this.getMapImage(this.streetArrayToString(), null);
+      this.getLocationsMapImage();
 
     } catch (err) {
       console.log("Cannot perform search.");
     }
   }
 
-  // get and set the map image url given and stored info
-  getMapImage = async (locations, destination) => {
+  // get and set the locations map image url
+  getLocationsMapImage = async () => {
     try {
       const data = await Axios({
         method: 'GET',
@@ -158,11 +153,10 @@ class App extends Component {
         params: {
           key: this.key,
           start: this.state.base,
-          end: destination,
-          locations: locations,
+          locations: this.streetArrayToString(),
           scalebar: 'true|bottom',
-          // zoom: 12,
-          // shape: 'radius:10km|' + this.state.base,
+          zoom: 12,
+          shape: 'radius:10km|' + this.state.base,
           size: '800,800'
         }
       })
@@ -170,7 +164,30 @@ class App extends Component {
         mapImageURL: URL.createObjectURL(data.data)
       })
     } catch (err) {
-      console.log("Cannot generate map.");
+      console.log("Cannot generate locations map.");
+    }
+  }
+
+  // get and set the route map image url
+  getRouteMapImage = async () => {
+    try {
+      const data = await Axios({
+        method: 'GET',
+        url: 'https://www.mapquestapi.com/staticmap/v5/map',
+        responseType: 'blob',
+        params: {
+          key: this.key,
+          start: this.state.base,
+          end: this.state.destination,
+          scalebar: 'true|bottom',
+          size: '800,800'
+        }
+      })
+      this.setState({
+        mapImageURL: URL.createObjectURL(data.data)
+      })
+    } catch (err) {
+      console.log("Cannot generate route map.");
     }
   }
 
@@ -206,7 +223,7 @@ class App extends Component {
           {this.state.searchResults.map(location => {
             let address = location.displayString.slice(location.name.length +2);
             return (
-              <button onClick={this.setDestination} value={address}>{location.displayString}</button>
+              <button key={address} onClick={this.setDestination} value={address}>{location.displayString}</button>
             )  
           })}
         </div>
