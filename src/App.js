@@ -68,6 +68,27 @@ class App extends Component {
     }
   }
 
+  geoLocation = async (location) => {
+    try {
+      const data = await Axios.get("http://www.mapquestapi.com/geocoding/v1/address", {
+        params: {
+          key: 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5',
+          location: location
+        }
+      });
+      console.log(data)
+      data = data.data.results[0].locations.displayLatLng;
+      this.setState({
+        baseGeoLocation: [data.lat, data.lng]
+      })
+      console.log("Latitude and Longitude:")
+      console.log(this.state.baseGeoLocation)
+    } catch (err) {
+      console.log("Cannot get geo location.");
+    }
+  }
+  
+
   streetArrayToString = () => {
     return this.state.searchResults.reduce((result, current) => {
       return result + '||' + current.displayString.slice(current.name.length + 2);
@@ -93,11 +114,16 @@ class App extends Component {
 
   search = async () => {
     try {
+      if (this.state.base) {
+        console.log("This shows the base state")
+        console.log(this.state.base);
+        this.geoLocation(this.state.base)
+      }
       const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
         params: {
           key: this.key,
           sort: 'relevance',
-          circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
+          // circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
           q: this.state.search,
           pageSize: 20
         }
@@ -133,7 +159,7 @@ class App extends Component {
           size: '800,800'
         }
       })
-      console.log(data)
+      // console.log(data)
       this.setState({
         mapImageURL: URL.createObjectURL(data.data)
       })
