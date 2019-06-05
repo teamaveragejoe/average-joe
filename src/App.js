@@ -25,6 +25,36 @@ class App extends Component {
     });
   }
 
+  setDestination = (e) => {
+    console.log(e.target.value)
+    // console.log(e.target.value.slice(e.target.value.length + 2)
+
+    this.setState({
+      destination: e.target.value
+    }, () => {
+      console.log(this.state.destination);
+      this.getMapImage(null, this.state.destination)
+    })
+  }
+
+  // displayRoute = async () => {
+  //   try {
+  //     const data = await Axios.get(
+  //       'http://www.mapquestapi.com/staticmap/v5/map',
+  //       {
+  //         params: {
+  //           key: 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5',
+  //           start: this.state.base,
+  //           end: this.state.destination
+  //         }
+  //       }
+  //     )
+  //     console.log(data.data)
+  //   } catch (err) {
+  //     console.log('Cannot get route.')
+  //   }
+  // }
+
   // using the navigator object, fetch user's browser location
   getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -39,7 +69,6 @@ class App extends Component {
   }
 
   streetArrayToString = () => {
-    console.log(this.state.searchResults);
     return this.state.searchResults.reduce((result, current) => {
       return result + '||' + current.displayString.slice(current.name.length + 2);
     }, '').substring(2).replace('#', ' ');
@@ -70,7 +99,7 @@ class App extends Component {
           sort: 'relevance',
           circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
           q: this.state.search,
-          pageSize: 50,
+          pageSize: 20
         }
       })
 
@@ -99,11 +128,12 @@ class App extends Component {
           end: destination,
           locations: locations,
           scalebar: 'true|bottom',
-          zoom: 12,
-          shape: 'radius:10km|' + this.state.base,
+          // zoom: 12,
+          // shape: 'radius:10km|' + this.state.base,
+          size: '800,800'
         }
       })
-
+      console.log(data)
       this.setState({
         mapImageURL: URL.createObjectURL(data.data)
       })
@@ -125,7 +155,7 @@ class App extends Component {
             placeholder="e.g. 483 Queen St W, Toronto, ON"
             value={this.state.base}
             onChange={this.handleInput} />
-          <button type="button" onClick={this.getCurrentLocation}>Current Location</button>
+          <button type="button" onClick={this.getCurrentLocation}>Use Current Location</button>
           <h2>Where would you like to go?</h2>
           <input
             type="text"
@@ -138,6 +168,14 @@ class App extends Component {
 
         <div className="map-markers">
           <img src={this.state.mapImageURL} />
+        </div>
+        <div className="location-list">
+          {this.state.searchResults.map(location => {
+            let address = location.displayString.slice(location.name.length +2);
+            return (
+              <button onClick={this.setDestination} value={address}>{location.displayString}</button>
+            )  
+          })}
         </div>
       </div>
     );
