@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import Form from './Form.js';
 import Map from './Map.js';
+import Locations from './Locations.js';
 import Directions from './Directions.js';
 
 class App extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
     });
   }
 
+  // get and set the directions from base to destination
   displayRoute = async () => {
     try {
       const data = await Axios.get(
@@ -48,7 +50,6 @@ class App extends Component {
       this.setState({
         directions
       });
-      console.log(this.state.directions);
     } catch (err) {
       console.log('Cannot get route.')
     }
@@ -131,9 +132,7 @@ class App extends Component {
 
     try {
       // convert address entered into geo location
-      if (this.state.base) {
-        await this.geoLocation(this.state.base);
-      }
+      await this.geoLocation(this.state.base);
 
       let data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
         params: {
@@ -188,7 +187,6 @@ class App extends Component {
           start: this.state.base,
           locations: this.streetArrayToString(),
           scalebar: 'true|bottom',
-          zoom: 12,
           shape: 'radius:10km|' + this.state.base,
           size: '800,800'
         }
@@ -232,7 +230,7 @@ class App extends Component {
             <h1>Average Joe</h1>
           </header>
 
-          <Form 
+          <Form
             search={this.search}
             base={this.state.base}
             handleInput={this.handleInput}
@@ -241,27 +239,17 @@ class App extends Component {
           />
 
           <div className="content-container">
-            <div className="location-list">
-              {this.state.searchResults.map((location, index) => {
-                return (
-                  <button 
-                  key={index + location.address} 
-                  onClick={() => { this.setDestination(location.address)}}
-                  className={(this.state.highlightedLocations[0] === index || this.state.highlightedLocations[1] === index ? "highlighted-button" : "")}
-                  >
-                  <h4>{location.name}</h4>
-                  <p>{location.address}</p>
-                </button>
-                )
-              })}
-            </div>
+            <Locations 
+              searchResults={this.state.searchResults}
+              highlightedLocations={this.state.highlightedLocations}
+            />
 
-            <Map url={this.state.mapImageURL}/>
+            <Map url={this.state.mapImageURL} />
 
-            <Directions directions={this.state.directions}/>
+            <Directions directions={this.state.directions} />
           </div>
         </div>
-        
+
       </div>
     );
   }
