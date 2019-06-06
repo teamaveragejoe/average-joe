@@ -9,6 +9,9 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 
 
+.highlighted-button {
+  background-color: red;
+}
 
 /******************************************************
  general
