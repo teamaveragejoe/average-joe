@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Form from './Form.js';
+import Map from './Map.js';
 
 class App extends Component {
   constructor() {
@@ -229,9 +230,7 @@ class App extends Component {
             })}
           </div>
 
-          <div className="map-markers">
-            <img src={this.state.mapImageURL} />
-          </div>
+          <Map url={this.state.mapImageURL}/>
         </div>
       </div>
     );
