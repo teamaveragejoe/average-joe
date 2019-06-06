@@ -18,6 +18,7 @@ class App extends Component {
       // mapMarkers: [],
       mapImageURL: '',
       destination: '',
+      directions: [],
     };
   }
 
@@ -28,23 +29,28 @@ class App extends Component {
     });
   }
 
-  // displayRoute = async () => {
-  //   try {
-  //     const data = await Axios.get(
-  //       'http://www.mapquestapi.com/staticmap/v5/map',
-  //       {
-  //         params: {
-  //           key: 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5',
-  //           start: this.state.base,
-  //           end: this.state.destination
-  //         }
-  //       }
-  //     )
-  //     console.log(data.data)
-  //   } catch (err) {
-  //     console.log('Cannot get route.')
-  //   }
-  // }
+  displayRoute = async () => {
+    try {
+      const data = await Axios.get(
+        'http://www.mapquestapi.com/directions/v2/route',
+        {
+          params: {
+            key: this.key,
+            from: this.state.base,
+            to: this.state.destination
+          }
+        }
+      )
+
+      const directions = data.data.route.legs[0].maneuvers.map(steps => steps.narrative);
+      this.setState({
+        directions
+      });
+      console.log(this.state.directions);
+    } catch (err) {
+      console.log('Cannot get route.')
+    }
+  }
 
   // convert an array of addresses into one string of a required format
   streetArrayToString = () => {
@@ -74,6 +80,7 @@ class App extends Component {
       destination: address
     }, () => {
       this.getRouteMapImage();
+      this.displayRoute();
     })
   }
 
