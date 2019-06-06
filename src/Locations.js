@@ -6,7 +6,8 @@ function Locations(props) {
     <div className="location-list">
       {props.searchResults.map((location, index) => {
         return (
-          <LocationButton 
+          <LocationButton
+            key={index + location.address}
             index={index}
             name={location.name}
             address={location.address}

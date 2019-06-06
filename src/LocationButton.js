@@ -2,10 +2,9 @@ import React from 'react';
 
 function LocationButton(props) {
   const {index, name, address, highlightedLocations} = props
-  
+
   return(
     <button
-      key={index + address}
       onClick={() => { this.setDestination(address) }}
       className={
         highlightedLocations[0] === index || highlightedLocations[1] === index
