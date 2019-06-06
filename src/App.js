@@ -258,18 +258,7 @@ class App extends Component {
 
             <Map url={this.state.mapImageURL}/>
 
-            
-            <div className="directions-list">
-              <ol>
-              {this.state.directions.map(directions => {
-                return (
-                  <Directions 
-                    item={directions}
-                  />   
-                )
-              })}
-              </ol>
-            </div>
+            <Directions directions={this.state.directions}/>
           </div>
         </div>
         

@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function Directions (props) {
+function Directions(props) {
     return (
-        <li>{props.item}</li>
+        <div className="directions-list">
+            <ol>
+                {props.directions.map((direction, index) => <li key={index}>{direction}</li>)}
+            </ol>
+        </div>
     );
 }
 
