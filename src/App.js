@@ -26,15 +26,6 @@ class App extends Component {
     });
   }
 
-  // set destination to the address selected and display the route map from base to destination
-  setDestination = (e) => {
-    this.setState({
-      destination: e.target.value
-    }, () => {
-      this.getRouteMapImage();
-    })
-  }
-
   // displayRoute = async () => {
   //   try {
   //     const data = await Axios.get(
@@ -56,7 +47,7 @@ class App extends Component {
   // convert an array of addresses into one string of a required format
   streetArrayToString = () => {
     return this.state.searchResults.reduce((result, current) => {
-      return result + '||' + current.displayString.slice(current.name.length + 2);
+      return result + '||' + current.address;
     }, '').substring(2).replace('#', ' ');
   }
 
@@ -64,9 +55,8 @@ class App extends Component {
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        // get and store the lat and lng of the user's current location
-        this.setState({ 
-          baseGeoLocation: [position.coords.latitude, position.coords.longitude] 
+        this.setState({
+          baseGeoLocation: [position.coords.latitude, position.coords.longitude]
         })
         // convert the lat and lng to an address
         this.reverseGeo(`${position.coords.latitude},${position.coords.longitude}`);
@@ -74,6 +64,15 @@ class App extends Component {
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
+  }
+
+  // set destination to the address selected and display the route map from base to destination
+  setDestination = (address) => {
+    this.setState({
+      destination: address
+    }, () => {
+      this.getRouteMapImage();
+    })
   }
 
   // Given an address, convert the address to [lat, lng] and store it in baseGeoLocation
@@ -86,9 +85,9 @@ class App extends Component {
         }
       });
 
-      const latLng = data.data.results[0].locations[0].latLng;
+      const { lat, lng } = data.data.results[0].locations[0].latLng;
       this.setState({
-        baseGeoLocation: [latLng.lat, latLng.lng]
+        baseGeoLocation: [lat, lng]
       })
     } catch (err) {
       console.log("Cannot get geo location.");
@@ -122,7 +121,7 @@ class App extends Component {
         await this.geoLocation(this.state.base);
       }
 
-      const data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
+      let data = await Axios.get("https://www.mapquestapi.com/search/v4/place", {
         params: {
           key: this.key,
           sort: 'relevance',
@@ -132,8 +131,16 @@ class App extends Component {
         }
       })
 
+      // convert the results array into an array of objects each containing the name and address of a location
+      const results = data.data.results.map(location => {
+        return {
+          name: location.name,
+          address: location.displayString.slice(location.name.length + 2)
+        }
+      });
+
       this.setState({
-        searchResults: data.data.results
+        searchResults: results
       })
 
       this.getLocationsMapImage();
@@ -194,38 +201,48 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Average Joe</h1>
+        <header>
+          <h1>Average Joe</h1>
+        </header>
 
         <form>
-          <h2>Where are you?</h2>
-          <input
-            type="text"
-            name="base"
-            placeholder="e.g. 483 Queen St W, Toronto, ON"
-            value={this.state.base}
-            onChange={this.handleInput} />
-          <button type="button" onClick={this.getCurrentLocation}>Use Current Location</button>
-          <h2>Where would you like to go?</h2>
-          <input
-            type="text"
-            name="search"
-            placeholder="e.g. cafes, Tim Horton's"
-            value={this.state.search}
-            onChange={this.handleInput} />
-          <button type="button" id="submit-search" onClick={this.search}>Submit</button>
+          <div className="start-input-group">
+            <h2>Where are you?</h2>
+            <input
+              type="text"
+              name="base"
+              placeholder="e.g. 483 Queen St W, Toronto, ON"
+              value={this.state.base}
+              onChange={this.handleInput} />
+            <button type="button" onClick={this.getCurrentLocation}>Use Current Location</button>
+          </div>
+          <div className="search-input-group">
+            <h2>Where would you like to go?</h2>
+            <input
+              type="text"
+              name="search"
+              placeholder="e.g. cafes, Tim Horton's"
+              value={this.state.search}
+              onChange={this.handleInput} />
+            <button type="button" id="submit-search" onClick={this.search}>Submit</button>
+          </div>
         </form>
 
-        <div className="map-markers">
-          <img src={this.state.mapImageURL} />
-        </div>
+        <div className="content-container">
+          <div className="location-list">
+            {this.state.searchResults.map(location => {
+              return (
+                <button key={location.address} onClick={() => { this.setDestination(location.address)}}>
+                  <h4>{location.name}</h4>
+                  <p>{location.address}</p>
+                </button>
+              )
+            })}
+          </div>
 
-        <div className="location-list">
-          {this.state.searchResults.map(location => {
-            let address = location.displayString.slice(location.name.length +2);
-            return (
-              <button key={address} onClick={this.setDestination} value={address}>{location.displayString}</button>
-            )  
-          })}
+          <div className="map-markers">
+            <img src={this.state.mapImageURL} />
+          </div>
         </div>
       </div>
     );
