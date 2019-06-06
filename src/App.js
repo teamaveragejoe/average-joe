@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import Form from './Form.js';
 import Map from './Map.js';
+import Directions from './Directions.js';
 
 class App extends Component {
   constructor() {
@@ -225,24 +226,25 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header>
-          <h1>Average Joe</h1>
-        </header>
+      <div className="flex-container">
+        <div className="App">
+          <header>
+            <h1>Average Joe</h1>
+          </header>
 
-        <Form 
-          search={this.search}
-          base={this.state.base}
-          handleInput={this.handleInput}
-          getCurrentLocation={this.getCurrentLocation}
-          searchTerm={this.state.searchTerm}
-        />
+          <Form 
+            search={this.search}
+            base={this.state.base}
+            handleInput={this.handleInput}
+            getCurrentLocation={this.getCurrentLocation}
+            searchTerm={this.state.searchTerm}
+          />
 
-        <div className="content-container">
-          <div className="location-list">
-            {this.state.searchResults.map((location, index) => {
-              return (
-                <button 
+          <div className="content-container">
+            <div className="location-list">
+              {this.state.searchResults.map(location => {
+                return (
+                  <button 
                   key={location.address} 
                   onClick={() => { this.setDestination(location.address)}}
                   className={(this.state.highlightedLocations[0] === index || this.state.highlightedLocations[1] === index ? "highlighted-button" : "")}
@@ -250,12 +252,27 @@ class App extends Component {
                   <h4>{location.name}</h4>
                   <p>{location.address}</p>
                 </button>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
 
-          <Map url={this.state.mapImageURL}/>
+            <Map url={this.state.mapImageURL}/>
+
+            
+            <div className="directions-list">
+              <ol>
+              {this.state.directions.map(directions => {
+                return (
+                  <Directions 
+                    item={directions}
+                  />   
+                )
+              })}
+              </ol>
+            </div>
+          </div>
         </div>
+        
       </div>
     );
   }
