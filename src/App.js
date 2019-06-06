@@ -141,7 +141,7 @@ class App extends Component {
           sort: 'relevance',
           circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
           q: this.state.searchTerm,
-          pageSize: 7
+          pageSize: 50
         }
       })
 
@@ -242,7 +242,7 @@ class App extends Component {
 
           <div className="content-container">
             <div className="location-list">
-              {this.state.searchResults.map(location => {
+              {this.state.searchResults.map((location, index) => {
                 return (
                   <button 
                   key={location.address} 
