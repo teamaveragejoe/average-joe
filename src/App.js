@@ -18,6 +18,7 @@ class App extends Component {
       // mapMarkers: [],
       mapImageURL: '',
       destination: '',
+      highlightedLocations: [null, null],
       directions: [],
     };
   }
@@ -139,7 +140,7 @@ class App extends Component {
           sort: 'relevance',
           circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
           q: this.state.searchTerm,
-          pageSize: 20
+          pageSize: 7
         }
       })
 
@@ -151,8 +152,20 @@ class App extends Component {
         }
       });
 
+      //Find the most "average" location... aka highlight the middle result (or middle two results in the event of an even number of results)
+      let highlightedLocations = [null, null];
+
+      if (results.length % 2 === 0) {
+        highlightedLocations = [(results.length / 2) - 1, (results.length / 2)];
+      } else {
+        highlightedLocations = [Math.floor(results.length / 2)];
+      }
+
+      console.log(highlightedLocations)
+
       this.setState({
-        searchResults: results
+        searchResults: results,
+        highlightedLocations: highlightedLocations
       })
 
       this.getLocationsMapImage();
@@ -227,9 +240,13 @@ class App extends Component {
 
         <div className="content-container">
           <div className="location-list">
-            {this.state.searchResults.map(location => {
+            {this.state.searchResults.map((location, index) => {
               return (
-                <button key={location.address} onClick={() => { this.setDestination(location.address)}}>
+                <button 
+                  key={location.address} 
+                  onClick={() => { this.setDestination(location.address)}}
+                  className={(this.state.highlightedLocations[0] === index || this.state.highlightedLocations[1] === index ? "highlighted-button" : "")}
+                  >
                   <h4>{location.name}</h4>
                   <p>{location.address}</p>
                 </button>
