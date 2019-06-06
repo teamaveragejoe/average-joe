@@ -115,8 +115,11 @@ class App extends Component {
 
   // search a place of interest and display a list of the results as well as a map
   // marking said results
-  search = async () => {
+  search = async (e) => {
+    e.preventDefault();
+
     try {
+      // convert address entered into geo location
       if (this.state.base) {
         await this.geoLocation(this.state.base);
       }
@@ -205,13 +208,16 @@ class App extends Component {
           <h1>Average Joe</h1>
         </header>
 
-        <form>
+        <form onSubmit={this.search}>
           <div className="start-input-group">
             <h2>Where are you?</h2>
             <input
               type="text"
               name="base"
               placeholder="e.g. 483 Queen St W, Toronto, ON"
+              required
+              pattern="\S.{0,40}"
+              title="No empty space in the beginning please."
               value={this.state.base}
               onChange={this.handleInput} />
             <button type="button" onClick={this.getCurrentLocation}>Use Current Location</button>
@@ -222,9 +228,12 @@ class App extends Component {
               type="text"
               name="search"
               placeholder="e.g. cafes, Tim Horton's"
+              required
+              pattern="\S.{0,40}"
+              title="No empty space in the beginning please."
               value={this.state.search}
               onChange={this.handleInput} />
-            <button type="button" id="submit-search" onClick={this.search}>Submit</button>
+            <button type="submit" id="submit-search">Submit</button>
           </div>
         </form>
 
