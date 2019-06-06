@@ -1,11 +1,11 @@
 import React from 'react';
 
 function LocationButton(props) {
-  const {index, name, address, highlightedLocations} = props
+  const {setDestination, index, name, address, highlightedLocations} = props
 
   return(
     <button
-      onClick={() => { this.setDestination(address) }}
+      onClick={() => { setDestination(address) }}
       className={
         highlightedLocations[0] === index || highlightedLocations[1] === index
           ? "highlighted-button"

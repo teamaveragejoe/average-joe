@@ -8,6 +8,7 @@ function Locations(props) {
         return (
           <LocationButton
             key={index + location.address}
+            setDestination={props.setDestination}
             index={index}
             name={location.name}
             address={location.address}

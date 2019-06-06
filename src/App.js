@@ -239,7 +239,8 @@ class App extends Component {
           />
 
           <div className="content-container">
-            <Locations 
+            <Locations
+              setDestination={this.setDestination}
               searchResults={this.state.searchResults}
               highlightedLocations={this.state.highlightedLocations}
             />
