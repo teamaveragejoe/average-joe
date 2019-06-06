@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import Form from './Form.js';
 
 class App extends Component {
   constructor() {
@@ -10,7 +11,7 @@ class App extends Component {
     // set initial location (blank)
     this.state = {
       base: '481 Queen St W',
-      search: '',
+      searchTerm: '',
       baseGeoLocation: [],
       searchResults: [],
       // mapMarkers: [],
@@ -129,7 +130,7 @@ class App extends Component {
           key: this.key,
           sort: 'relevance',
           circle: `${this.state.baseGeoLocation[1]}, ${this.state.baseGeoLocation[0]}, 10000`,
-          q: this.state.search,
+          q: this.state.searchTerm,
           pageSize: 20
         }
       })
@@ -208,34 +209,13 @@ class App extends Component {
           <h1>Average Joe</h1>
         </header>
 
-        <form onSubmit={this.search}>
-          <div className="start-input-group">
-            <h2>Where are you?</h2>
-            <input
-              type="text"
-              name="base"
-              placeholder="e.g. 483 Queen St W, Toronto, ON"
-              required
-              pattern="\S.{0,40}"
-              title="No empty space in the beginning please."
-              value={this.state.base}
-              onChange={this.handleInput} />
-            <button type="button" onClick={this.getCurrentLocation}>Use Current Location</button>
-          </div>
-          <div className="search-input-group">
-            <h2>Where would you like to go?</h2>
-            <input
-              type="text"
-              name="search"
-              placeholder="e.g. cafes, Tim Horton's"
-              required
-              pattern="\S.{0,40}"
-              title="No empty space in the beginning please."
-              value={this.state.search}
-              onChange={this.handleInput} />
-            <button type="submit" id="submit-search">Submit</button>
-          </div>
-        </form>
+        <Form 
+          search={this.search}
+          base={this.state.base}
+          handleInput={this.handleInput}
+          getCurrentLocation={this.getCurrentLocation}
+          searchTerm={this.state.searchTerm}
+        />
 
         <div className="content-container">
           <div className="location-list">
