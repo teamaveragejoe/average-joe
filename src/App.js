@@ -245,7 +245,7 @@ class App extends Component {
               {this.state.searchResults.map((location, index) => {
                 return (
                   <button 
-                  key={location.address} 
+                  key={index + location.address} 
                   onClick={() => { this.setDestination(location.address)}}
                   className={(this.state.highlightedLocations[0] === index || this.state.highlightedLocations[1] === index ? "highlighted-button" : "")}
                   >
