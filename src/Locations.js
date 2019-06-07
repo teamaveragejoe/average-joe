@@ -3,7 +3,7 @@ import LocationButton from './LocationButton.js'
 
 function Locations(props) {
   return (
-    <div className="location-list">
+    <div className="location-list" id="location-list-id">
       {props.searchResults.map((location, index) => {
         return (
           <LocationButton
