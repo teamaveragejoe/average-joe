@@ -58,8 +58,8 @@ class App extends Component {
   // convert an array of addresses into one string of a required format
   streetArrayToString = () => {
     return this.state.searchResults.reduce((result, current) => {
-      return result + '||' + current.address;
-    }, '').substring(2).replace('#', ' ');
+      return result + current.address + '||';
+    }, '').replace('#', ' ');
   }
 
   // using the navigator object, fetch user's browser location
@@ -184,8 +184,7 @@ class App extends Component {
         responseType: 'blob',
         params: {
           key: this.key,
-          start: this.state.base,
-          locations: this.streetArrayToString(),
+          locations: this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
           shape: 'radius:10km|' + this.state.base,
           size: '800,800'
@@ -208,8 +207,8 @@ class App extends Component {
         responseType: 'blob',
         params: {
           key: this.key,
-          start: this.state.base,
-          end: this.state.destination,
+          start: this.state.base + '|flag-start',
+          end: this.state.destination + '|flag-end',
           scalebar: 'true|bottom',
           size: '800,800'
         }
