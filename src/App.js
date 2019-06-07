@@ -22,7 +22,10 @@ class App extends Component {
       mapImageURL: '',
       destination: '',
       highlightedLocations: [null, null],
-      directions: []
+      directions: [],
+      mapLoadingStyle: {
+        display: 'none',
+      }
     }
   }
 
@@ -149,6 +152,10 @@ class App extends Component {
   search = async e => {
     e.preventDefault()
 
+    this.setState({
+      directions: [],
+    })
+
     try {
       // convert address entered into geo location
       await this.geoLocation(this.state.base)
@@ -200,6 +207,14 @@ class App extends Component {
 
   // get and set the locations map image url
   getLocationsMapImage = async () => {
+
+    //Set the map loading div to show up
+    this.setState({
+      mapLoadingStyle: {
+        display: 'block'
+      }
+    })
+
     try {
       const data = await Axios({
         method: 'GET',
@@ -215,7 +230,11 @@ class App extends Component {
         }
       })
       this.setState({
-        mapImageURL: URL.createObjectURL(data.data)
+        mapImageURL: URL.createObjectURL(data.data),
+        //hide the map loading div once the API request goes through
+        mapLoadingStyle: {
+          display: 'none'
+        }
       })
     } catch (err) {
       console.log('Cannot generate locations map.')
@@ -224,6 +243,12 @@ class App extends Component {
 
   // get and set the route map image url
   getRouteMapImage = async () => {
+    //Set the map loading div to show up
+    this.setState({
+      mapLoadingStyle: {
+        display: 'block'
+      }
+    })
     try {
       const data = await Axios({
         method: 'GET',
@@ -238,7 +263,11 @@ class App extends Component {
         }
       })
       this.setState({
-        mapImageURL: URL.createObjectURL(data.data)
+        mapImageURL: URL.createObjectURL(data.data),
+        //hide the map loading div once the API request goes through
+        mapLoadingStyle: {
+          display: 'none'
+        }
       })
     } catch (err) {
       console.log('Cannot generate route map.')
@@ -287,7 +316,7 @@ class App extends Component {
                 highlightedLocations={this.state.highlightedLocations}
               />
 
-              <Map url={this.state.mapImageURL} />
+              <Map url={this.state.mapImageURL} style={this.state.mapLoadingStyle}/>
             </div>
 
             {this.state.directions.length > 0 ?   
