@@ -275,7 +275,8 @@ input:active {
 
 .location-list {
   width: 40%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* .map-markers {
