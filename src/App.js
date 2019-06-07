@@ -35,7 +35,6 @@ class App extends Component {
       [e.target.name]: e.target.value
     })
     if (e.target.name === "range" && this.state.base && this.state.searchTerm) {
-      console.log("LOLOLOLOLOLOLOL");
       this.search();
     }
   }
@@ -198,8 +197,6 @@ class App extends Component {
         highlightedLocations = [Math.floor(results.length / 2)]
       }
 
-      console.log(highlightedLocations)
-
       this.setState({
         searchResults: results,
         highlightedLocations: highlightedLocations
@@ -231,7 +228,7 @@ class App extends Component {
           locations:
             this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
-          shape: 'radius:10km|' + this.state.base,
+          shape: `radius:${this.state.range / 1000}km` + '|' + this.state.base,
           size: '800,800'
         }
       })
