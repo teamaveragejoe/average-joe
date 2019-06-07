@@ -296,9 +296,18 @@ input:active {
   background-color: #d4cee8;
 }
 
-/* .map-markers {
-  width: 65%;
-} */
+.map-markers {
+  display: relative;
+}
+
+.loading-popup {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+}
 
 .map-markers img {
   max-height: 100%;
