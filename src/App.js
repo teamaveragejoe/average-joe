@@ -16,9 +16,9 @@ class App extends Component {
     this.state = {
       base: '481 Queen St W',
       searchTerm: '',
+      range: 10000,
       baseGeoLocation: [],
       searchResults: [],
-      // mapMarkers: [],
       mapImageURL: '',
       destination: '',
       highlightedLocations: [null, null],
@@ -29,11 +29,15 @@ class App extends Component {
     }
   }
 
-  // generic input setter
+  // input setter
   handleInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
+    if (e.target.name === "range" && this.state.base && this.state.searchTerm) {
+      console.log("LOLOLOLOLOLOLOL");
+      this.search();
+    }
   }
 
   // get and set the directions from base to destination
@@ -150,7 +154,9 @@ class App extends Component {
   // search a place of interest and display a list of the results as well as a map
   // marking said results
   search = async e => {
-    e.preventDefault()
+    if (e) {
+      e.preventDefault();
+    }
 
     this.setState({
       directions: [],
@@ -168,7 +174,7 @@ class App extends Component {
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
-              }, 10000`,
+              }, ${this.state.range}`,
             q: this.state.searchTerm,
             pageSize: 50
           }
@@ -302,6 +308,7 @@ class App extends Component {
             <Form
               search={this.search}
               base={this.state.base}
+              range={this.state.range}
               handleInput={this.handleInput}
               getCurrentLocation={this.getCurrentLocation}
               searchTerm={this.state.searchTerm}
