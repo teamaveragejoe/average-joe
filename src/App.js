@@ -71,8 +71,13 @@ class App extends Component {
   // convert an array of addresses into one string of a required format
   streetArrayToString = () => {
     return this.state.searchResults
-      .reduce((result, current) => {
-        return result + current.address + '||'
+      .reduce((result, current, index) => {
+        if (this.state.highlightedLocations.includes(index)) {
+          console.log(index);
+          return result + current.address + '|flag-FFD700-so so||';
+        } else {
+          return result + current.address + '||';
+        }
       }, '')
       .replace('#', ' ')
   }
