@@ -253,8 +253,8 @@ class App extends Component {
       //Find which button is highlighted for the most 'average' location, aka the middle of the list
       let highlightButtonElement = document.getElementById("button-highlight-id");
 
-      //Since the highlighted button is scrolled just past the top of the div, subtract the button height times 6 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
-      let topOffset = highlightButtonElement.offsetTop - highlightButtonElement.offsetHeight * 6;
+      //Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
+      let topOffset = highlightButtonElement.offsetTop - highlightButtonElement.offsetHeight * 4;
 
       //set the scroll of the location list div to the above values.
       document.getElementById("location-list-id").scrollTop = topOffset;
