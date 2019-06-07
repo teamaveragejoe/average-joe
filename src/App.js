@@ -15,6 +15,7 @@ class App extends Component {
     // set initial location (blank)
     this.state = {
       base: '481 Queen St W',
+      usingCurrent: false,
       searchTerm: '',
       range: 10000,
       baseGeoLocation: [],
@@ -76,6 +77,10 @@ class App extends Component {
 
   // using the navigator object, fetch user's browser location
   getCurrentLocation = () => {
+    this.setState({
+      usingCurrent: !this.state.usingCurrent
+    });
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         this.setState({
@@ -317,6 +322,7 @@ class App extends Component {
             <Form
               search={this.search}
               base={this.state.base}
+              usingCurrent={this.state.usingCurrent}
               range={this.state.range}
               handleInput={this.handleInput}
               getCurrentLocation={this.getCurrentLocation}

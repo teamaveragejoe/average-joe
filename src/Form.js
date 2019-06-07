@@ -14,6 +14,7 @@ function Form (props) {
           title='No empty space in the beginning please.'
           value={props.base}
           onChange={props.handleInput}
+          disabled={props.usingCurrent}
         />
         <div className='check-contain'>
           <label htmlFor='current-location' className='checkbox-container'>
