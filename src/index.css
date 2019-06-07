@@ -9,9 +9,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 
 
-.highlighted-button {
-  background-color: red;
-}
+
 
 /******************************************************
  general
@@ -22,8 +20,6 @@ p {
   text-align: center;
   margin: 0 auto;
 }
-
-
 
 /******************************************************
  form 

@@ -274,7 +274,10 @@ class App extends Component {
               <Map url={this.state.mapImageURL} />
             </div>
 
+            {this.state.directions.length > 0 ?   
             <Directions directions={this.state.directions} />
+            : null
+            }
           </div>
         </div>
       </div>
