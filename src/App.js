@@ -23,9 +23,10 @@ class App extends Component {
       destination: '',
       highlightedLocations: [null, null],
       directions: [],
+      areSearchResultsEmpty: false,
       mapLoadingStyle: {
         display: 'none',
-      }
+      },
     }
   }
 
@@ -189,6 +190,13 @@ class App extends Component {
         }
       })
 
+      //Do a check to see if any results are found, and if so, set a search results empty flag.
+      if (results.length === 0){
+        this.setState({
+          areSearchResultsEmpty: true
+        })
+      }
+
       // Find the most "average" location... aka highlight the middle result (or middle two results in the event of an even number of results)
       let highlightedLocations = [null, null]
 
@@ -321,6 +329,7 @@ class App extends Component {
                 setDestination={this.setDestination}
                 searchResults={this.state.searchResults}
                 highlightedLocations={this.state.highlightedLocations}
+                areSearchResultsEmpty={this.state.areSearchResultsEmpty}
               />
 
               <Map url={this.state.mapImageURL} style={this.state.mapLoadingStyle}/>
