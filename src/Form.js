@@ -30,6 +30,20 @@ function Form (props) {
           onChange={props.handleInput} />
         <button type="submit" id="submit-search">Submit</button>
       </div>
+
+      <div className="range-input-group">
+        <h2>What far in metres do you want to search?</h2>
+        <input
+          type="range"
+          name="range"
+          min="1000"
+          max="20000"
+          step="1000"
+          value={props.range}
+          onChange={props.handleInput}
+        />
+        <h3>{props.range}m</h3>
+      </div>
     </form>
   )
 }
