@@ -5,7 +5,6 @@ function Form (props) {
     <form onSubmit={props.search}>
       <div className='start-input-group'>
         <h2>Where are you?</h2>
-
         <input
           type='text'
           name='base'
@@ -17,14 +16,15 @@ function Form (props) {
           onChange={props.handleInput}
         />
         <div className='check-contain'>
-          <label for='current-location' class='checkbox-container'>
+          <label htmlFor='current-location' className='checkbox-container'>
             <input
               id='current-location'
               type='checkbox'
               onChange={props.getCurrentLocation}
             />
-            <span class='checkmark' />
-            Use Current Location
+            <span className='checkmark'>
+              Use Current Location
+            </span>
           </label>
         </div>
       </div>
