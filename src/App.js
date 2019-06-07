@@ -194,6 +194,10 @@ class App extends Component {
         this.setState({
           areSearchResultsEmpty: true
         })
+      } else{
+        this.setState({
+          areSearchResultsEmpty: false
+        })
       }
 
       // Find the most "average" location... aka highlight the middle result (or middle two results in the event of an even number of results)
