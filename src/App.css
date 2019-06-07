@@ -270,6 +270,17 @@ input:active {
   padding-bottom: 10px;
 }
 
+.geolocator-loading-prompt {
+  background: white;
+  border: 1px solid red;
+  border-radius: 15px;
+  padding: 15px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+}
+
 .content-container {
   display: flex;
   height: 65vh;
