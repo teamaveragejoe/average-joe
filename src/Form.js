@@ -2,63 +2,71 @@ import React from 'react'
 
 function Form (props) {
   return (
-    <form onSubmit={props.search}>
-      <div className='start-input-group'>
-        <h2>Where are you?</h2>
+    <form onSubmit={props.search} className="form-flex">
+      <div className='form-inputs'>
 
-        <input
-          type='text'
-          name='base'
-          placeholder='e.g. 483 Queen St W, Toronto, ON'
-          required
-          pattern='\S.{0,40}'
-          title='No empty space in the beginning please.'
-          value={props.base}
-          onChange={props.handleInput}
-        />
-        <div className='check-contain'>
-          <label for='current-location' class='checkbox-container'>
+        <div className='start-input-group input-group'>
+          <h2>Where are you?</h2>
+          <input
+            type='text'
+            name='base'
+            placeholder='ex. 483 Queen St W, Toronto'
+            required
+            pattern='\S.{0,40}'
+            value={props.base}
+            onChange={props.handleInput}
+          />
+          <div className='check-contain'>
             <input
               id='current-location'
               type='checkbox'
+              className='checkbox'
               onChange={props.getCurrentLocation}
             />
-            <span class='checkmark' />
-            Use Current Location
-          </label>
+            <label htmlFor='current-location' className='check-label'>
+              {/* <span class='checkmark'/> */}
+              Use Current Location
+            </label>
+          </div>
+        </div>
+
+        <div className='search-input-group input-group'>
+          <h2>Where would you like to go?</h2>
+          <input
+            type='text'
+            name='searchTerm'
+            placeholder="ex. cafe, Tim Horton's"
+            required
+            pattern='\S.{0,40}'
+            value={props.searchTerm}
+            onChange={props.handleInput}
+          />
+        </div>
+
+        <div className='range-input-group input-group'>
+          <h2>How far would you go?</h2>
+          <input
+            type='range'
+            name='range'
+            className='range-slider'
+            min='1000'
+            aria-valuemin='1000'
+            max='20000'
+            aria-valuemax='20000'
+            step='1000'
+            value={props.range}
+            onChange={props.handleInput}
+          />
+          <h4>{props.range / 1000}km</h4>
         </div>
       </div>
 
-      <div className='search-input-group'>
-        <h2>Where would you like to go?</h2>
-        <input
-          type='text'
-          name='searchTerm'
-          placeholder="e.g. cafes, Tim Horton's"
-          required
-          pattern='\S.{0,40}'
-          title='No empty space in the beginning please.'
-          value={props.searchTerm}
-          onChange={props.handleInput}
-        />
+      <div className='form-button'>
         <button type='submit' id='submit-search'>
           Submit
         </button>
       </div>
 
-      <div className="range-input-group">
-        <h2>What far in metres do you want to search?</h2>
-        <input
-          type="range"
-          name="range"
-          min="1000"
-          max="20000"
-          step="1000"
-          value={props.range}
-          onChange={props.handleInput}
-        />
-        <h3>{props.range}m</h3>
-      </div>
     </form>
   )
 }

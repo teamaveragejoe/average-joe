@@ -14,7 +14,7 @@ class App extends Component {
 
     // set initial location (blank)
     this.state = {
-      base: '481 Queen St W',
+      base: '',
       searchTerm: '',
       range: 10000,
       baseGeoLocation: [],
