@@ -240,10 +240,6 @@ button {
   background: white;
 }
 
-/* .form-container {
-  width: 90%;
-  margin: 0 auto;
-} */
 
 .form-inputs {
   display: flex;
@@ -290,14 +286,6 @@ input[type=text] {
   /* width: calc(100% - 60px); */
 }
 
-/* input:hover,
-input:focus,
-input:active {
-  border: none;
-  border-bottom: #93003d solid 2px;
-  padding-bottom: 10px;
-} */
-
 .form-button {
   margin: 0 auto;
 }
@@ -338,53 +326,6 @@ input:active {
   padding-bottom: 5px;
 }
 
-/* .check-contain {
-  position: relative;
-}
-
-.checkbox-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 25px;
-  width: 25px;
-  border: 1px solid black;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: grey;
-}
-
-.container input:checked ~ .checkmark {
-  background-color: #2196F3;
-} */
-
-/* .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.checkbox-container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-} */
 
 /* SLIDER STYLING */
 
@@ -492,14 +433,15 @@ input[type=range]:focus::-ms-fill-upper {
 
 .content-container {
   display: flex;
-  height: 65vh;
   margin-bottom: 50px;
-  /* border: 2px solid #2b0058; */
+  justify-content: center;
 }
 
 .map-and-locations {
   display: flex;
-  width: 70%;
+  width: 95%;
+  justify-content: space-between;
+  height: 70vh;
 }
 
 .location-list {
@@ -510,6 +452,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .location-list button {
   padding: 10px;
+  border-top: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbbbbb;
 }
 
 .highlighted-button {
@@ -518,6 +462,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .map-markers {
   display: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .loading-popup {
@@ -537,7 +483,6 @@ input[type=range]:focus::-ms-fill-upper {
 /* WRITTEN DIRECTIONS */
 
 .directions-list {
-  width: 30%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -548,4 +493,101 @@ input[type=range]:focus::-ms-fill-upper {
 
 .directions-list li {
   margin: 10px 0;
+}
+
+
+@media (max-width: 1204px) {
+
+  .content-container {
+    flex-direction: column;
+  }
+
+  .map-and-locations {
+    width: 100%;
+  }
+
+  .directions-list {
+    text-align: center;
+  }
+
+}
+
+@media (max-width: 1000px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  button h4 {
+    font-size: 0.9rem;
+  }
+  button p {
+    font-size: 0.8rem;
+  }
+
+  .check-label {
+    font-size: 0.75rem;
+  }
+
+  .form-container button {
+    font-size: 0.8rem;
+    width: 125px;
+  }
+
+  .location-list {
+    width: 30%;
+    height: 82%;
+    margin-top: 8%;
+  }
+}
+
+@media (max-width: 750px) {
+
+  h1 {
+    font-size: 50px;
+  }
+
+  .form-inputs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-group {
+    width: 80%;
+    padding-top: 5%;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 1%;
+  }
+
+  .map-and-locations {
+    flex-direction: column;
+    height: 120vh;
+  }
+
+  .location-list {
+    width: 100%;
+    margin: 0 0 5%;
+  }
+
+  .map-markers {
+    width: 100%;
+  }
+
+
+}
+
+@media (max-width: 450px) {
+  .input-group {
+    width: 95%;
+  }
+
+  input[type=text] {
+    font-size: 0.8rem;
+  }
+
+  .map-and-locations {
+    height: 100vh;
+  }
 }

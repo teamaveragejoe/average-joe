@@ -1,16 +1,15 @@
 import React from 'react'
 
-function Form(props) {
+function Form (props) {
   return (
-    <form onSubmit={props.search} className="form-flex">
+    <form onSubmit={props.search} className='form-flex'>
       <div className='form-inputs'>
-
         <div className='start-input-group input-group'>
           <h2>Where are you?</h2>
           <input
             type='text'
             name='base'
-            placeholder='e.g. 483 Queen St W, Toronto, ON'
+            placeholder='ex. 483 Queen St W, Toronto'
             required
             pattern='\S.{0,40}'
             title='No empty space in the beginning please.'
@@ -74,7 +73,6 @@ function Form(props) {
           Submit
         </button>
       </div>
-
     </form>
   )
 }
