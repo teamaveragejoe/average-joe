@@ -13,11 +13,11 @@ class App extends Component {
 
     this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
     this.displayNone = { display: 'none' };
-    this.displayBlock = { display: 'block' };
+    this.displayShow = { display: 'block' };
 
     // set initial location (blank)
     this.state = {
-      base: '481 Queen St W',
+      base: '',
       usingCurrent: false,
       searchTerm: '',
       range: 10000,
@@ -150,7 +150,7 @@ class App extends Component {
 
       //When attempting to find address automatically using browser geolocation, display loading popup
       this.setState({
-        geolocationLoadingStyle: this.displayBlock
+        geolocationLoadingStyle: this.displayShow
       })
 
       try {
@@ -163,9 +163,12 @@ class App extends Component {
             }
           }
         )
-        // set current location as base
+
+        //save the result of the reverse lookup, and then parse out the address and save it into state
+        const reverseAddressResult= data.data.results[0].locations[0];
+
         this.setState({
-          base: data.data.results[0].locations[0].street,
+          base: reverseAddressResult.street + ", " + reverseAddressResult.adminArea5 + ", " + reverseAddressResult.adminArea3,
           geolocationLoadingStyle: this.displayNone
         })
       } catch (err) {
@@ -250,7 +253,7 @@ class App extends Component {
 
     //Set the map loading div to show up
     this.setState({
-      mapLoadingStyle: this.displayBlock
+      mapLoadingStyle: this.displayShow
     })
 
     try {
