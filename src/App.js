@@ -63,7 +63,7 @@ class App extends Component {
     this.setState({
       touristMode: !this.state.touristMode
     }, () => {
-        if (this.state.duplicateNames) {
+        if (this.state.searchResults) {
           this.getLocationsMapImage();
         }
     });
