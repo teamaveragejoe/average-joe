@@ -9,7 +9,7 @@ function Form (props) {
           <input
             type='text'
             name='base'
-            placeholder='e.g. 483 Queen St W, Toronto, ON'
+            placeholder='ex. 483 Queen St W, Toronto'
             required
             pattern='\S.{0,40}'
             title='No empty space in the beginning please.'
