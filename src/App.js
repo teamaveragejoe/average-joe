@@ -165,7 +165,7 @@ class App extends Component {
         )
 
         //save the result of the reverse lookup, and then parse out the address and save it into state
-        const reverseAddressResult= data.data.results[0].locations[0];
+        const reverseAddressResult = data.data.results[0].locations[0];
 
         this.setState({
           base: reverseAddressResult.street + ", " + reverseAddressResult.adminArea5 + ", " + reverseAddressResult.adminArea3,
@@ -173,6 +173,9 @@ class App extends Component {
         })
       } catch (err) {
         alert('An error occured finding your address automatically.')
+        this.setState({
+          geolocationLoadingStyle: this.displayNone
+        })
       }
 
     } //closing bracket for if statement
@@ -277,6 +280,9 @@ class App extends Component {
       })
     } catch (err) {
       alert('Cannot generate locations map.');
+      this.setState({
+        mapLoadingStyle: this.displayNone
+      })
     }
   }
 
