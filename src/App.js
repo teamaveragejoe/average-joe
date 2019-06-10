@@ -8,12 +8,12 @@ import GeolocationLoading from './GeolocationLoading'
 import './App.css'
 
 class App extends Component {
-  constructor() {
+  constructor () {
     super()
 
-    this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
-    this.displayNone = {display: 'none'};
-    this.displayBlock = {display: 'block'};
+    this.key = 'u1dw2yO1uotU0TFFZdonF5x98157c84N'
+    this.displayNone = { display: 'none' }
+    this.displayBlock = { display: 'block' }
 
     // set initial location (blank)
     this.state = {
@@ -30,6 +30,8 @@ class App extends Component {
       areSearchResultsEmpty: false,
       mapLoadingStyle: this.displayNone,
       geolocationLoadingStyle: this.displayNone,
+      showInfo: false,
+      showDirections: false
     }
   }
 
@@ -38,8 +40,8 @@ class App extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    if (e.target.name === "range" && this.state.base && this.state.searchTerm) {
-      this.search();
+    if (e.target.name === 'range' && this.state.base && this.state.searchTerm) {
+      this.search()
     }
   }
 
@@ -73,10 +75,10 @@ class App extends Component {
     return this.state.searchResults
       .reduce((result, current, index) => {
         if (this.state.highlightedLocations.includes(index)) {
-          console.log(index);
-          return result + current.address + '|flag-FFD700-so so||';
+          console.log(index)
+          return result + current.address + '|flag-FFD700-so so||'
         } else {
-          return result + current.address + '||';
+          return result + current.address + '||'
         }
       }, '')
       .replace('#', ' ')
@@ -86,7 +88,7 @@ class App extends Component {
   getCurrentLocation = () => {
     this.setState({
       usingCurrent: !this.state.usingCurrent
-    });
+    })
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -110,7 +112,8 @@ class App extends Component {
   setDestination = address => {
     this.setState(
       {
-        destination: address
+        destination: address,
+        showDirections: true
       },
       () => {
         this.getRouteMapImage()
@@ -144,8 +147,7 @@ class App extends Component {
   // Given a string in the form of 'lat,lng' representing a lat and lng, covert it to
   // an address and store it in base
   reverseGeo = async location => {
-
-    //When attempting to find address automatically using browser geolocation, display loading popup
+    // When attempting to find address automatically using browser geolocation, display loading popup
     this.setState({
       geolocationLoadingStyle: this.displayBlock
     })
@@ -174,11 +176,11 @@ class App extends Component {
   // marking said results
   search = async e => {
     if (e) {
-      e.preventDefault();
+      e.preventDefault()
     }
 
     this.setState({
-      directions: [],
+      directions: []
     })
 
     try {
@@ -193,7 +195,7 @@ class App extends Component {
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
-              }, ${this.state.range}`,
+            }, ${this.state.range}`,
             q: this.state.searchTerm,
             pageSize: 50
           }
@@ -208,12 +210,12 @@ class App extends Component {
         }
       })
 
-      //Do a check to see if any results are found, and if so, set a search results empty flag.
-      if (results.length === 0){
+      // Do a check to see if any results are found, and if so, set a search results empty flag.
+      if (results.length === 0) {
         this.setState({
           areSearchResultsEmpty: true
         })
-      } else{
+      } else {
         this.setState({
           areSearchResultsEmpty: false
         })
@@ -230,19 +232,19 @@ class App extends Component {
 
       this.setState({
         searchResults: results,
-        highlightedLocations: highlightedLocations
+        highlightedLocations: highlightedLocations,
+        showInfo: true
       })
 
       this.getLocationsMapImage()
     } catch (err) {
-      alert('Cannot perform search. An error has occured.');
+      alert('Cannot perform search. An error has occured.')
     }
   }
 
   // get and set the locations map image url
   getLocationsMapImage = async () => {
-
-    //Set the map loading div to show up
+    // Set the map loading div to show up
     this.setState({
       mapLoadingStyle: this.displayBlock
     })
@@ -263,17 +265,17 @@ class App extends Component {
       })
       this.setState({
         mapImageURL: URL.createObjectURL(data.data),
-        //hide the map loading div once the API request goes through
+        // hide the map loading div once the API request goes through
         mapLoadingStyle: this.displayNone
       })
     } catch (err) {
-      alert('Cannot generate locations map.');
+      alert('Cannot generate locations map.')
     }
   }
 
   // get and set the route map image url
   getRouteMapImage = async () => {
-    //Set the map loading div to show up
+    // Set the map loading div to show up
     this.setState({
       mapLoadingStyle: {
         display: 'block'
@@ -294,7 +296,7 @@ class App extends Component {
       })
       this.setState({
         mapImageURL: URL.createObjectURL(data.data),
-        //hide the map loading div once the API request goes through
+        // hide the map loading div once the API request goes through
         mapLoadingStyle: {
           display: 'none'
         }
@@ -304,59 +306,69 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-
+  componentDidUpdate () {
     // Do the below as long as the search results aren't zero.
     if (this.state.searchResults.length > 0) {
+      // Find which button is highlighted for the most 'average' location, aka the middle of the list
+      let highlightButtonElement = document.getElementById(
+        'button-highlight-id'
+      )
 
-      //Find which button is highlighted for the most 'average' location, aka the middle of the list
-      let highlightButtonElement = document.getElementById("button-highlight-id");
+      // Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
+      let topOffset =
+        highlightButtonElement.offsetTop -
+        highlightButtonElement.offsetHeight * 4
 
-      //Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
-      let topOffset = highlightButtonElement.offsetTop - highlightButtonElement.offsetHeight * 4;
-
-      //set the scroll of the location list div to the above values.
-      document.getElementById("location-list-id").scrollTop = topOffset;
+      // set the scroll of the location list div to the above values.
+      document.getElementById('location-list-id').scrollTop = topOffset
     }
   }
 
-  render() {
+  render () {
     return (
       <div className='wrapper'>
         <div className='App'>
           <header>
             <h1>Average Joe</h1>
           </header>
-
-          <div className='form-container'>
-            <Form
-              search={this.search}
-              base={this.state.base}
-              usingCurrent={this.state.usingCurrent}
-              range={this.state.range}
-              handleInput={this.handleInput}
-              getCurrentLocation={this.getCurrentLocation}
-              searchTerm={this.state.searchTerm}
-            />
-            <GeolocationLoading style={this.state.geolocationLoadingStyle} />
-          </div>
-
-          <div className='content-container'>
-            <div className='map-and-locations'>
-              <Locations
-                setDestination={this.setDestination}
-                searchResults={this.state.searchResults}
-                highlightedLocations={this.state.highlightedLocations}
-                areSearchResultsEmpty={this.state.areSearchResultsEmpty}
+          <div className='form-contact-contain'>
+            <div className='form-container'>
+              <Form
+                search={this.search}
+                base={this.state.base}
+                usingCurrent={this.state.usingCurrent}
+                range={this.state.range}
+                handleInput={this.handleInput}
+                getCurrentLocation={this.getCurrentLocation}
+                searchTerm={this.state.searchTerm}
               />
-
-              <Map url={this.state.mapImageURL} style={this.state.mapLoadingStyle}/>
+              <GeolocationLoading style={this.state.geolocationLoadingStyle} />
             </div>
+            {this.state.showInfo ? (
+              <div className='content-container'>
+                <div className='map-and-locations'>
+                  <Locations
+                    setDestination={this.setDestination}
+                    searchResults={this.state.searchResults}
+                    highlightedLocations={this.state.highlightedLocations}
+                    areSearchResultsEmpty={this.state.areSearchResultsEmpty}
+                  />
 
-            {this.state.directions.length > 0 ?   
-            <Directions directions={this.state.directions} />
-            : null
-            }
+                  <Map
+                    url={this.state.mapImageURL}
+                    style={this.state.mapLoadingStyle}
+                  />
+                </div>
+
+                <div className='direction-container'>
+                  {this.state.showDirections ? (
+                    this.state.directions.length > 0 ? (
+                      <Directions directions={this.state.directions} />
+                    ) : null
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
