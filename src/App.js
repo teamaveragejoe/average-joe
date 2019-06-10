@@ -4,17 +4,21 @@ import Form from './Form.js'
 import Map from './Map.js'
 import Locations from './Locations.js'
 import Directions from './Directions.js'
+import GeolocationLoading from './GeolocationLoading'
 import './App.css'
 
 class App extends Component {
   constructor() {
     super()
 
-    this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5'
+    this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
+    this.displayNone = {display: 'none'};
+    this.displayBlock = {display: 'block'};
 
     // set initial location (blank)
     this.state = {
-      base: '',
+      base: '481 Queen St W',
+      usingCurrent: false,
       searchTerm: '',
       range: 10000,
       baseGeoLocation: [],
@@ -24,9 +28,8 @@ class App extends Component {
       highlightedLocations: [null, null],
       directions: [],
       areSearchResultsEmpty: false,
-      mapLoadingStyle: {
-        display: 'none',
-      },
+      mapLoadingStyle: this.displayNone,
+      geolocationLoadingStyle: this.displayNone,
     }
   }
 
@@ -68,14 +71,23 @@ class App extends Component {
   // convert an array of addresses into one string of a required format
   streetArrayToString = () => {
     return this.state.searchResults
-      .reduce((result, current) => {
-        return result + current.address + '||'
+      .reduce((result, current, index) => {
+        if (this.state.highlightedLocations.includes(index)) {
+          console.log(index);
+          return result + current.address + '|flag-FFD700-so so||';
+        } else {
+          return result + current.address + '||';
+        }
       }, '')
       .replace('#', ' ')
   }
 
   // using the navigator object, fetch user's browser location
   getCurrentLocation = () => {
+    this.setState({
+      usingCurrent: !this.state.usingCurrent
+    });
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         this.setState({
@@ -90,7 +102,7 @@ class App extends Component {
         )
       })
     } else {
-      console.log('Geolocation is not supported by this browser.')
+      alert('Geolocation is not supported by this browser.')
     }
   }
 
@@ -132,6 +144,12 @@ class App extends Component {
   // Given a string in the form of 'lat,lng' representing a lat and lng, covert it to
   // an address and store it in base
   reverseGeo = async location => {
+
+    //When attempting to find address automatically using browser geolocation, display loading popup
+    this.setState({
+      geolocationLoadingStyle: this.displayBlock
+    })
+
     try {
       const data = await Axios.get(
         'http://www.mapquestapi.com/geocoding/v1/reverse',
@@ -144,10 +162,11 @@ class App extends Component {
       )
       // set current location as base
       this.setState({
-        base: data.data.results[0].locations[0].street
+        base: data.data.results[0].locations[0].street,
+        geolocationLoadingStyle: this.displayNone
       })
     } catch (err) {
-      console.log('Cannot reverse geo location.')
+      alert('An error occured finding your address automatically.')
     }
   }
 
@@ -216,7 +235,7 @@ class App extends Component {
 
       this.getLocationsMapImage()
     } catch (err) {
-      console.log('Cannot perform search.')
+      alert('Cannot perform search. An error has occured.');
     }
   }
 
@@ -225,9 +244,7 @@ class App extends Component {
 
     //Set the map loading div to show up
     this.setState({
-      mapLoadingStyle: {
-        display: 'block'
-      }
+      mapLoadingStyle: this.displayBlock
     })
 
     try {
@@ -247,12 +264,10 @@ class App extends Component {
       this.setState({
         mapImageURL: URL.createObjectURL(data.data),
         //hide the map loading div once the API request goes through
-        mapLoadingStyle: {
-          display: 'none'
-        }
+        mapLoadingStyle: this.displayNone
       })
     } catch (err) {
-      console.log('Cannot generate locations map.')
+      alert('Cannot generate locations map.');
     }
   }
 
@@ -285,7 +300,7 @@ class App extends Component {
         }
       })
     } catch (err) {
-      console.log('Cannot generate route map.')
+      alert('Cannot generate route map.')
     }
   }
 
@@ -317,11 +332,13 @@ class App extends Component {
             <Form
               search={this.search}
               base={this.state.base}
+              usingCurrent={this.state.usingCurrent}
               range={this.state.range}
               handleInput={this.handleInput}
               getCurrentLocation={this.getCurrentLocation}
               searchTerm={this.state.searchTerm}
             />
+            <GeolocationLoading style={this.state.geolocationLoadingStyle} />
           </div>
 
           <div className='content-container'>

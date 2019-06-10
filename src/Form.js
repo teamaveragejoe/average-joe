@@ -6,17 +6,20 @@ function Form (props) {
       <div className='form-inputs'>
 
         <div className='start-input-group input-group'>
-          <h2>Where are you?</h2>
-          <input
-            type='text'
-            name='base'
-            placeholder='ex. 483 Queen St W, Toronto'
-            required
-            pattern='\S.{0,40}'
-            value={props.base}
-            onChange={props.handleInput}
-          />
-          <div className='check-contain'>
+        <h2>Where are you?</h2>
+        <input
+          type='text'
+          name='base'
+          placeholder='e.g. 483 Queen St W, Toronto, ON'
+          required
+          pattern='\S.{0,40}'
+          title='No empty space in the beginning please.'
+          value={props.base}
+          onChange={props.handleInput}
+          disabled={props.usingCurrent}
+        />
+        <div className='check-contain'>
+          <label htmlFor='current-location' className='checkbox-container'>
             <input
               id='current-location'
               type='checkbox'
