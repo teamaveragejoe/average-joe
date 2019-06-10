@@ -11,7 +11,7 @@ class App extends Component {
   constructor() {
     super()
 
-    this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
+    this.APIKEY = process.env.REACT_APP_API_KEY;
     this.displayNone = { display: 'none' };
     this.displayBlock = { display: 'block' };
 
@@ -50,7 +50,7 @@ class App extends Component {
         'http://www.mapquestapi.com/directions/v2/route',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             from: this.state.base,
             to: this.state.destination
           }
@@ -126,7 +126,7 @@ class App extends Component {
         'http://www.mapquestapi.com/geocoding/v1/address',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             location: location
           }
         }
@@ -158,7 +158,7 @@ class App extends Component {
           'http://www.mapquestapi.com/geocoding/v1/reverse',
           {
             params: {
-              key: this.key,
+              key: this.APIKEY,
               location: location
             }
           }
@@ -195,7 +195,7 @@ class App extends Component {
         'https://www.mapquestapi.com/search/v4/place',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
@@ -259,7 +259,7 @@ class App extends Component {
         url: 'https://www.mapquestapi.com/staticmap/v5/map',
         responseType: 'blob',
         params: {
-          key: this.key,
+          key: this.APIKEY,
           locations:
             this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
@@ -291,7 +291,7 @@ class App extends Component {
         url: 'https://www.mapquestapi.com/staticmap/v5/map',
         responseType: 'blob',
         params: {
-          key: this.key,
+          key: this.APIKEY,
           start: this.state.base + '|flag-start',
           end: this.state.destination + '|flag-end',
           scalebar: 'true|bottom',
