@@ -14,6 +14,7 @@ class App extends Component {
     this.APIKEY = process.env.REACT_APP_API_KEY
     this.displayNone = { display: 'none' }
     this.displayShow = { display: 'block' }
+    this.locationListRef = React.createRef();
 
     // set initial location (blank)
     this.state = {
@@ -271,6 +272,7 @@ class App extends Component {
         this.setState({
           areSearchResultsEmpty: false
         })
+
       }
 
       // Find the most "average" location... aka highlight the middle result (or middle two results in the event of an even number of results)
@@ -287,6 +289,11 @@ class App extends Component {
         highlightedLocations: highlightedLocations,
         showInfo: true
       })
+
+      this.locationListRef.current.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "nearest"
+     })
 
       this.getDuplicateIndex();
       this.getLocationsMapImage();
@@ -403,8 +410,11 @@ class App extends Component {
               <GeolocationLoading style={this.state.geolocationLoadingStyle} />
             </div>
             {this.state.showInfo ? (
-              <div className='content-container'>
-                <div className='map-and-locations'>
+              <div 
+                className='content-container'
+                ref={this.locationListRef}>
+                <div 
+                  className='map-and-locations'>
                   <Locations
                     setDestination={this.setDestination}
                     searchResults={this.state.searchResults}
