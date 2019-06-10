@@ -168,7 +168,7 @@ input::-moz-focus-inner {
   box-sizing: border-box;
 }
 
-.visuallyHidden:not(:focus):not(:active) {
+.visually-hidden:not(:focus):not(:active) {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -181,6 +181,72 @@ input::-moz-focus-inner {
   overflow: hidden;
 }
 
+
+/******************************
+ general
+*******************************/
+h1,
+h4,
+p {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*******************************
+ form 
+********************************/
+form {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px auto 30px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+
+
+/*******************************
+ content
+********************************/
+.content-container {
+  display: flex;
+}
+
+
+
+
+/**************************
+ location list container
+***************************/
+.location-list {
+  display: block;
+  width: 30%;
+}
+
+.location-list button {
+  width: 100%;
+}
+
+.location-list button:hover {
+  transform: scale(1.1);
+}
+
+
+
+
+/**********
+ map
+***********/
+.map-markers {
+  width: 70%;
+}
+
+.map-markers img {
+  max-width: 100%;
+  width: 100%;
+}
 /* GENERAL */
 
 html {
@@ -294,7 +360,7 @@ input[type=text] {
   border: #3c3c3c 2px solid;
   border: #2b0058 2px solid;
   border-radius: 25px;
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 10px;
   width: 200px;
   color: #3c3c3c;
@@ -452,8 +518,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .location-list button {
   padding: 10px;
-  border-top: 1px solid #bbbbbb;
-  border-bottom: 1px solid #bbbbbb;
+  border-top: 1px solid #93003D;
+  border-bottom: 1px solid #93003D;
 }
 
 .highlighted-button {
@@ -461,7 +527,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .tourist-mode-button {
-  background-color: palegreen;
+  background-color: lightyellow;
 }
 
 .map-markers {
@@ -497,6 +563,11 @@ input[type=range]:focus::-ms-fill-upper {
 
 .directions-list li {
   margin: 10px 0;
+}
+
+.tourist {
+  font-size: 0.9rem;
+
 }
 
 
@@ -544,7 +615,8 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 
-@media (max-width: 750px) {
+
+@media (max-width: 850px) {
 
   h1 {
     font-size: 50px;
@@ -567,7 +639,7 @@ input[type=range]:focus::-ms-fill-upper {
 
   .map-and-locations {
     flex-direction: column;
-    height: 120vh;
+    height: 125vh;
   }
 
   .location-list {
