@@ -11,13 +11,13 @@ class App extends Component {
   constructor () {
     super()
 
-    this.key = 'u1dw2yO1uotU0TFFZdonF5x98157c84N'
+    this.APIKEY = process.env.REACT_APP_API_KEY
     this.displayNone = { display: 'none' }
-    this.displayBlock = { display: 'block' }
+    this.displayShow = { display: 'block' }
 
     // set initial location (blank)
     this.state = {
-      base: '481 Queen St W',
+      base: '',
       usingCurrent: false,
       searchTerm: '',
       range: 10000,
@@ -45,6 +45,18 @@ class App extends Component {
     }
   }
 
+  updateSliderRange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleEnter = e => {
+    if (e.keyCode === 13) {
+      this.handleInput(e)
+    }
+  }
+
   // get and set the directions from base to destination
   displayRoute = async () => {
     try {
@@ -52,7 +64,7 @@ class App extends Component {
         'http://www.mapquestapi.com/directions/v2/route',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             from: this.state.base,
             to: this.state.destination
           }
@@ -129,7 +141,7 @@ class App extends Component {
         'http://www.mapquestapi.com/geocoding/v1/address',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             location: location
           }
         }
@@ -147,29 +159,43 @@ class App extends Component {
   // Given a string in the form of 'lat,lng' representing a lat and lng, covert it to
   // an address and store it in base
   reverseGeo = async location => {
-    // When attempting to find address automatically using browser geolocation, display loading popup
-    this.setState({
-      geolocationLoadingStyle: this.displayBlock
-    })
-
-    try {
-      const data = await Axios.get(
-        'http://www.mapquestapi.com/geocoding/v1/reverse',
-        {
-          params: {
-            key: this.key,
-            location: location
-          }
-        }
-      )
-      // set current location as base
+    // only fire when the using current location checkbox is checked
+    if (this.state.usingCurrent === true) {
+      // When attempting to find address automatically using browser geolocation, display loading popup
       this.setState({
-        base: data.data.results[0].locations[0].street,
-        geolocationLoadingStyle: this.displayNone
+        geolocationLoadingStyle: this.displayShow
       })
-    } catch (err) {
-      alert('An error occured finding your address automatically.')
-    }
+
+      try {
+        const data = await Axios.get(
+          'http://www.mapquestapi.com/geocoding/v1/reverse',
+          {
+            params: {
+              key: this.APIKEY,
+              location: location
+            }
+          }
+        )
+
+        // save the result of the reverse lookup, and then parse out the address and save it into state
+        const reverseAddressResult = data.data.results[0].locations[0]
+
+        this.setState({
+          base:
+            reverseAddressResult.street +
+            ', ' +
+            reverseAddressResult.adminArea5 +
+            ', ' +
+            reverseAddressResult.adminArea3,
+          geolocationLoadingStyle: this.displayNone
+        })
+      } catch (err) {
+        alert('An error occured finding your address automatically.')
+        this.setState({
+          geolocationLoadingStyle: this.displayNone
+        })
+      }
+    } // closing bracket for if statement
   }
 
   // search a place of interest and display a list of the results as well as a map
@@ -191,7 +217,7 @@ class App extends Component {
         'https://www.mapquestapi.com/search/v4/place',
         {
           params: {
-            key: this.key,
+            key: this.APIKEY,
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
@@ -246,7 +272,7 @@ class App extends Component {
   getLocationsMapImage = async () => {
     // Set the map loading div to show up
     this.setState({
-      mapLoadingStyle: this.displayBlock
+      mapLoadingStyle: this.displayShow
     })
 
     try {
@@ -255,7 +281,7 @@ class App extends Component {
         url: 'https://www.mapquestapi.com/staticmap/v5/map',
         responseType: 'blob',
         params: {
-          key: this.key,
+          key: this.APIKEY,
           locations:
             this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
@@ -270,6 +296,9 @@ class App extends Component {
       })
     } catch (err) {
       alert('Cannot generate locations map.')
+      this.setState({
+        mapLoadingStyle: this.displayNone
+      })
     }
   }
 
@@ -287,7 +316,7 @@ class App extends Component {
         url: 'https://www.mapquestapi.com/staticmap/v5/map',
         responseType: 'blob',
         params: {
-          key: this.key,
+          key: this.APIKEY,
           start: this.state.base + '|flag-start',
           end: this.state.destination + '|flag-end',
           scalebar: 'true|bottom',
@@ -339,6 +368,8 @@ class App extends Component {
                 usingCurrent={this.state.usingCurrent}
                 range={this.state.range}
                 handleInput={this.handleInput}
+                handleEnter={this.handleEnter}
+                updateSliderRange={this.updateSliderRange}
                 getCurrentLocation={this.getCurrentLocation}
                 searchTerm={this.state.searchTerm}
               />

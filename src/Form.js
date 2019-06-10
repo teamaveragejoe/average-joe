@@ -1,10 +1,9 @@
 import React from 'react'
 
-function Form(props) {
+function Form (props) {
   return (
-    <form onSubmit={props.search} className="form-flex">
+    <form onSubmit={props.search} className='form-flex'>
       <div className='form-inputs'>
-
         <div className='start-input-group input-group'>
           <h2>Where are you?</h2>
           <input
@@ -60,7 +59,10 @@ function Form(props) {
             aria-valuemax='20000'
             step='1000'
             value={props.range}
-            onChange={props.handleInput}
+            onMouseUp={props.handleInput}
+            onTouchEnd={props.handleInput}
+            onKeyDown={props.handleEnter}
+            onChange={props.updateSliderRange}
           />
           <h4>{props.range / 1000}km</h4>
         </div>
@@ -71,7 +73,6 @@ function Form(props) {
           Submit
         </button>
       </div>
-
     </form>
   )
 }
