@@ -43,6 +43,18 @@ class App extends Component {
     }
   }
 
+  updateSliderRange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleEnter = e => {
+    if (e.keyCode === 13) {
+      this.handleInput(e);
+    }
+  }
+
   // get and set the directions from base to destination
   displayRoute = async () => {
     try {
@@ -350,6 +362,8 @@ class App extends Component {
               usingCurrent={this.state.usingCurrent}
               range={this.state.range}
               handleInput={this.handleInput}
+              handleEnter={this.handleEnter}
+              updateSliderRange={this.updateSliderRange}
               getCurrentLocation={this.getCurrentLocation}
               searchTerm={this.state.searchTerm}
             />

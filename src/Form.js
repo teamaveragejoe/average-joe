@@ -60,7 +60,10 @@ function Form(props) {
             aria-valuemax='20000'
             step='1000'
             value={props.range}
-            onChange={props.handleInput}
+            onMouseUp={props.handleInput}
+            onTouchEnd={props.handleInput}
+            onKeyDown={props.handleEnter}
+            onChange={props.updateSliderRange}
           />
           <h4>{props.range / 1000}km</h4>
         </div>
