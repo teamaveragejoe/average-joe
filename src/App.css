@@ -504,7 +504,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .location-list {
   width: 40%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 

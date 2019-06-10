@@ -12,8 +12,8 @@ class App extends Component {
     super()
 
     this.key = 'oi8gGoB5ItjqriYYUPxcSa8aTVFAMla5';
-    this.displayNone = {display: 'none'};
-    this.displayBlock = {display: 'block'};
+    this.displayNone = { display: 'none' };
+    this.displayBlock = { display: 'block' };
 
     // set initial location (blank)
     this.state = {
@@ -145,29 +145,35 @@ class App extends Component {
   // an address and store it in base
   reverseGeo = async location => {
 
-    //When attempting to find address automatically using browser geolocation, display loading popup
-    this.setState({
-      geolocationLoadingStyle: this.displayBlock
-    })
+    //only fire when the using current location checkbox is checked
+    if (this.state.usingCurrent === true) {
 
-    try {
-      const data = await Axios.get(
-        'http://www.mapquestapi.com/geocoding/v1/reverse',
-        {
-          params: {
-            key: this.key,
-            location: location
-          }
-        }
-      )
-      // set current location as base
+      //When attempting to find address automatically using browser geolocation, display loading popup
       this.setState({
-        base: data.data.results[0].locations[0].street,
-        geolocationLoadingStyle: this.displayNone
+        geolocationLoadingStyle: this.displayBlock
       })
-    } catch (err) {
-      alert('An error occured finding your address automatically.')
-    }
+
+      try {
+        const data = await Axios.get(
+          'http://www.mapquestapi.com/geocoding/v1/reverse',
+          {
+            params: {
+              key: this.key,
+              location: location
+            }
+          }
+        )
+        // set current location as base
+        this.setState({
+          base: data.data.results[0].locations[0].street,
+          geolocationLoadingStyle: this.displayNone
+        })
+      } catch (err) {
+        alert('An error occured finding your address automatically.')
+      }
+
+    } //closing bracket for if statement
+
   }
 
   // search a place of interest and display a list of the results as well as a map
@@ -209,11 +215,11 @@ class App extends Component {
       })
 
       //Do a check to see if any results are found, and if so, set a search results empty flag.
-      if (results.length === 0){
+      if (results.length === 0) {
         this.setState({
           areSearchResultsEmpty: true
         })
-      } else{
+      } else {
         this.setState({
           areSearchResultsEmpty: false
         })
@@ -350,12 +356,12 @@ class App extends Component {
                 areSearchResultsEmpty={this.state.areSearchResultsEmpty}
               />
 
-              <Map url={this.state.mapImageURL} style={this.state.mapLoadingStyle}/>
+              <Map url={this.state.mapImageURL} style={this.state.mapLoadingStyle} />
             </div>
 
-            {this.state.directions.length > 0 ?   
-            <Directions directions={this.state.directions} />
-            : null
+            {this.state.directions.length > 0 ?
+              <Directions directions={this.state.directions} />
+              : null
             }
           </div>
         </div>
