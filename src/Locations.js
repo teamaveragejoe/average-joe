@@ -20,6 +20,8 @@ function Locations (props) {
             name={location.name}
             address={location.address}
             highlightedLocations={props.highlightedLocations}
+            touristMode={props.touristMode}
+            duplicateNames={props.duplicateNames}
           />
         )
       })}

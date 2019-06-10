@@ -31,7 +31,9 @@ class App extends Component {
       mapLoadingStyle: this.displayNone,
       geolocationLoadingStyle: this.displayNone,
       showInfo: false,
-      showDirections: false
+      showDirections: false,
+      touristMode: false,
+      duplicateNames: {}
     }
   }
 
@@ -55,6 +57,16 @@ class App extends Component {
     if (e.keyCode === 13) {
       this.handleInput(e)
     }
+  }
+
+  toggleTouristMode = e => {
+    this.setState({
+      touristMode: !this.state.touristMode
+    }, () => {
+        if (this.state.duplicateNames) {
+          this.getLocationsMapImage();
+        }
+    });
   }
 
   // get and set the directions from base to destination
@@ -87,13 +99,27 @@ class App extends Component {
     return this.state.searchResults
       .reduce((result, current, index) => {
         if (this.state.highlightedLocations.includes(index)) {
-          console.log(index)
-          return result + current.address + '|flag-FFD700-so so||'
+          return result + current.address + '|flag-FFD700-so so||';
+        } else if (this.state.touristMode && this.state.duplicateNames[current.name] > 1) {
+          return result + current.address + '|marker-93003D||';
         } else {
-          return result + current.address + '||'
+          return result + current.address + '||';
         }
       }, '')
-      .replace('#', ' ')
+      .replace('#', ' ');
+  }
+
+  // find and set the names that appears more than once in location list
+  getDuplicateIndex = () => {
+    const duplicate = {};
+
+    for (let location of this.state.searchResults) {
+      duplicate[location.name] = duplicate[location.name] ? duplicate[location.name] + 1 : 1;
+    }
+
+    this.setState({
+      duplicateNames: duplicate
+    });
   }
 
   // using the navigator object, fetch user's browser location
@@ -262,7 +288,8 @@ class App extends Component {
         showInfo: true
       })
 
-      this.getLocationsMapImage()
+      this.getDuplicateIndex();
+      this.getLocationsMapImage();
     } catch (err) {
       alert('Cannot perform search. An error has occured.')
     }
@@ -282,8 +309,7 @@ class App extends Component {
         responseType: 'blob',
         params: {
           key: this.APIKEY,
-          locations:
-            this.streetArrayToString() + this.state.base + '|flag-start',
+          locations: this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
           shape: `radius:${this.state.range / 1000}km` + '|' + this.state.base,
           size: '800,800'
@@ -372,6 +398,7 @@ class App extends Component {
                 updateSliderRange={this.updateSliderRange}
                 getCurrentLocation={this.getCurrentLocation}
                 searchTerm={this.state.searchTerm}
+                toggleTouristMode={this.toggleTouristMode}
               />
               <GeolocationLoading style={this.state.geolocationLoadingStyle} />
             </div>
@@ -382,12 +409,15 @@ class App extends Component {
                     setDestination={this.setDestination}
                     searchResults={this.state.searchResults}
                     highlightedLocations={this.state.highlightedLocations}
+                    touristMode={this.state.touristMode}
+                    duplicateNames={this.state.duplicateNames}
                     areSearchResultsEmpty={this.state.areSearchResultsEmpty}
                   />
 
                   <Map
                     url={this.state.mapImageURL}
                     style={this.state.mapLoadingStyle}
+                    touristMode={this.state.touristMode}
                   />
                 </div>
 

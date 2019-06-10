@@ -460,6 +460,10 @@ input[type=range]:focus::-ms-fill-upper {
   background-color: #d4cee8;
 }
 
+.tourist-mode-button {
+  background-color: palegreen;
+}
+
 .map-markers {
   display: relative;
   display: flex;
