@@ -26,7 +26,6 @@ function Form (props) {
                 onChange={props.getCurrentLocation}
               />
               <label htmlFor='current-location' className='check-label'>
-                {/* <span class='checkmark'/> */}
                 Use Current Location
               </label>
             </label>
@@ -45,6 +44,19 @@ function Form (props) {
             value={props.searchTerm}
             onChange={props.handleInput}
           />
+          <div className='check-contain'>
+            <label htmlFor='tourist-mode' className='checkbox-container'>
+              <input
+                id='tourist-mode'
+                type='checkbox'
+                className='checkbox'
+                onChange={props.toggleTouristMode}
+              />
+              <label htmlFor='tourist-mode' className='check-label'>
+                Tourist Mode
+              </label>
+            </label>
+          </div>
         </div>
 
         <div className='range-input-group input-group'>
