@@ -1,34 +1,35 @@
 import React from 'react'
 
-function Form (props) {
+function Form(props) {
   return (
     <form onSubmit={props.search} className="form-flex">
       <div className='form-inputs'>
 
         <div className='start-input-group input-group'>
-        <h2>Where are you?</h2>
-        <input
-          type='text'
-          name='base'
-          placeholder='e.g. 483 Queen St W, Toronto, ON'
-          required
-          pattern='\S.{0,40}'
-          title='No empty space in the beginning please.'
-          value={props.base}
-          onChange={props.handleInput}
-          disabled={props.usingCurrent}
-        />
-        <div className='check-contain'>
-          <label htmlFor='current-location' className='checkbox-container'>
-            <input
-              id='current-location'
-              type='checkbox'
-              className='checkbox'
-              onChange={props.getCurrentLocation}
-            />
-            <label htmlFor='current-location' className='check-label'>
-              {/* <span class='checkmark'/> */}
-              Use Current Location
+          <h2>Where are you?</h2>
+          <input
+            type='text'
+            name='base'
+            placeholder='e.g. 483 Queen St W, Toronto, ON'
+            required
+            pattern='\S.{0,40}'
+            title='No empty space in the beginning please.'
+            value={props.base}
+            onChange={props.handleInput}
+            disabled={props.usingCurrent}
+          />
+          <div className='check-contain'>
+            <label htmlFor='current-location' className='checkbox-container'>
+              <input
+                id='current-location'
+                type='checkbox'
+                className='checkbox'
+                onChange={props.getCurrentLocation}
+              />
+              <label htmlFor='current-location' className='check-label'>
+                {/* <span class='checkmark'/> */}
+                Use Current Location
+              </label>
             </label>
           </div>
         </div>
@@ -40,6 +41,7 @@ function Form (props) {
             name='searchTerm'
             placeholder="ex. cafe, Tim Horton's"
             required
+            title='No empty space in the beginning please.'
             pattern='\S.{0,40}'
             value={props.searchTerm}
             onChange={props.handleInput}
