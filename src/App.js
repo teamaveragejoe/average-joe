@@ -9,7 +9,7 @@ import Intro from './IntroDescription.js'
 import './App.css'
 
 class App extends Component {
-  constructor() {
+  constructor () {
     super()
 
     this.APIKEY = process.env.REACT_APP_API_KEY
@@ -258,7 +258,7 @@ class App extends Component {
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
-              }, ${this.state.range}`,
+            }, ${this.state.range}`,
             q: this.state.searchTerm,
             pageSize: 50
           }
@@ -379,7 +379,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     // Do the below as long as the search results aren't zero.
     if (this.state.searchResults.length > 0) {
       // Find which button is highlighted for the most 'average' location, aka the middle of the list
@@ -388,16 +388,14 @@ class App extends Component {
       )
 
       // Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
-      let topOffset =
-        highlightButtonElement.offsetTop -
-        highlightButtonElement.offsetHeight * 8
+      let topOffset = highlightButtonElement.offsetTop;
 
       // set the scroll of the location list div to the above values.
-      document.getElementById('location-list-id').scrollTop = topOffset
+      document.getElementById('location-list-id').scrollTop = topOffset;
     }
   }
 
-  render() {
+  render () {
     return (
       <div className='wrapper'>
         <div className='App'>
@@ -446,6 +444,9 @@ class App extends Component {
             </div>
           ) : null}
         </div>
+        <footer>
+          <p>Project by Jeffrey Xu, Cheryl Leung, Adam Pachulski and Fazaa Ahmed.  Built using React JS.</p>
+        </footer>
       </div>
     )
   }

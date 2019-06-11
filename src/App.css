@@ -196,14 +196,18 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc00004D' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%2393003d4D' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b4D' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%239600494D' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b4D' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%239700574D' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c4D' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%239500674D' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c4D' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239100774D' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa4D' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%238800884D' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
   background-attachment: fixed;
   background-size: cover;
-  padding-bottom: 50px;
+  /* padding-bottom: 50px; */
 }
 
 .wrapper {
   width: 90%;
   max-width: 1280px;
   margin: 0 auto;
+}
+
+.App {
   padding-top: 1%;
+  min-height: calc(100vh - 30px);
 }
 
 h2 {
@@ -567,6 +571,22 @@ input[type=text]:disabled {
   font-size: 0.9rem;
 }
 
+footer {
+  background: linear-gradient(to right, rgba(8,0,43,0) 0%,rgba(8,0,43,0.6) 19%,rgba(8,0,43,0.6) 20%,rgba(8,0,43,0.6) 50%,rgba(8,0,43,0.6) 80%,rgba(8,0,43,0.6) 81%,rgba(8,0,43,0) 100%);
+  color: white;
+
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+
+  font-size: 75%;
+  line-height: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
 
 @media (max-width: 1204px) {
 
@@ -658,6 +678,12 @@ input[type=text]:disabled {
 
   .map-markers {
     width: 100%;
+  }
+
+  footer {
+    font-size: 60%;
+    line-height: 15px;
+    height: auto;
   }
 
 }
