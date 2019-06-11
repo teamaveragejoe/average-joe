@@ -66,7 +66,7 @@ class App extends Component {
         touristMode: !this.state.touristMode
       },
       () => {
-        if (this.state.searchResults) {
+        if (this.state.searchResults.length > 0) {
           this.getLocationsMapImage()
         }
       }
@@ -403,7 +403,7 @@ class App extends Component {
             <h1>Average Joe</h1>
           </header>
           <div className="description">
-            <p>Want to check out a new place, but not somewhere *too* great? Do you long for the days when you weren't excited about anything? This app is for you! Pick your location, then search for something you're interested in. You'll get the most middle-of-the-road place we can find in terms of relevance to your search, with directions on how to get there. With any luck, you'll have no strong feelings one way or the other!</p>
+            <p>Want to check out a new place, but not somewhere <em>too</em> great? Do you long for the days when you weren't excited about anything? This app is for you! Pick your location, then search for something you're interested in. You'll get the most middle-of-the-road place we can find in terms of relevance to your search, with directions on how to get there. With any luck, you'll have no strong feelings one way or the other!</p>
           </div>
           <div className='form-contact-contain'>
             <div className='form-container'>
