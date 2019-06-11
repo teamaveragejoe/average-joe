@@ -79,7 +79,7 @@ class App extends Component {
   displayRoute = async () => {
     try {
       const data = await Axios.get(
-        'http://www.mapquestapi.com/directions/v2/route',
+        'https://www.mapquestapi.com/directions/v2/route',
         {
           params: {
             key: this.APIKEY,
@@ -175,7 +175,7 @@ class App extends Component {
   geoLocation = async location => {
     try {
       const data = await Axios.get(
-        'http://www.mapquestapi.com/geocoding/v1/address',
+        'https://www.mapquestapi.com/geocoding/v1/address',
         {
           params: {
             key: this.APIKEY,
@@ -205,7 +205,7 @@ class App extends Component {
 
       try {
         const data = await Axios.get(
-          'http://www.mapquestapi.com/geocoding/v1/reverse',
+          'https://www.mapquestapi.com/geocoding/v1/reverse',
           {
             params: {
               key: this.APIKEY,
