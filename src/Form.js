@@ -54,6 +54,9 @@ function Form (props) {
               />
               <label htmlFor='tourist-mode' className='check-label'>
                 Tourist Mode
+                <p className='tourist'>
+                  (highlights multiple instances of same location)
+                </p>
               </label>
             </label>
           </div>

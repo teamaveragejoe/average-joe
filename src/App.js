@@ -61,13 +61,16 @@ class App extends Component {
   }
 
   toggleTouristMode = e => {
-    this.setState({
-      touristMode: !this.state.touristMode
-    }, () => {
+    this.setState(
+      {
+        touristMode: !this.state.touristMode
+      },
+      () => {
         if (this.state.searchResults) {
-          this.getLocationsMapImage();
+          this.getLocationsMapImage()
         }
-    });
+      }
+    )
   }
 
   // get and set the directions from base to destination
@@ -100,27 +103,32 @@ class App extends Component {
     return this.state.searchResults
       .reduce((result, current, index) => {
         if (this.state.highlightedLocations.includes(index)) {
-          return result + current.address + '|flag-FFD700-so so||';
-        } else if (this.state.touristMode && this.state.duplicateNames[current.name] > 1) {
-          return result + current.address + '|marker-93003D||';
+          return result + current.address + '|flag-FFD700-meh||'
+        } else if (
+          this.state.touristMode &&
+          this.state.duplicateNames[current.name] > 1
+        ) {
+          return result + current.address + '|marker-93003D||'
         } else {
-          return result + current.address + '||';
+          return result + current.address + '||'
         }
       }, '')
-      .replace('#', ' ');
+      .replace('#', ' ')
   }
 
   // find and set the names that appears more than once in location list
   getDuplicateIndex = () => {
-    const duplicate = {};
+    const duplicate = {}
 
     for (let location of this.state.searchResults) {
-      duplicate[location.name] = duplicate[location.name] ? duplicate[location.name] + 1 : 1;
+      duplicate[location.name] = duplicate[location.name]
+        ? duplicate[location.name] + 1
+        : 1
     }
 
     this.setState({
       duplicateNames: duplicate
-    });
+    })
   }
 
   // using the navigator object, fetch user's browser location
@@ -316,7 +324,8 @@ class App extends Component {
         responseType: 'blob',
         params: {
           key: this.APIKEY,
-          locations: this.streetArrayToString() + this.state.base + '|flag-start',
+          locations:
+            this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
           shape: `radius:${this.state.range / 1000}km` + '|' + this.state.base,
           size: '800,800'
