@@ -329,7 +329,7 @@ class App extends Component {
           locations:
             this.streetArrayToString() + this.state.base + '|flag-start',
           scalebar: 'true|bottom',
-          shape: `radius:${this.state.range / 1000}km` + '|' + this.state.base,
+          shape: `radius:${this.state.range / 1000}km|${this.state.base}`,
           size: '800,800'
         }
       })
@@ -400,7 +400,7 @@ class App extends Component {
       <div className='wrapper'>
         <div className='App'>
           <header>
-            <h1>Average Joe<span>😐</span></h1>
+            <h1>Average Joe<span role="img" aria-label="Meh Emoji">😐</span></h1>
           </header>
 
           <Intro style={this.state.intro} />

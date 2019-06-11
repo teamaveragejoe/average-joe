@@ -7,7 +7,7 @@ function Locations (props) {
       {props.areSearchResultsEmpty ? (
         <p className='no-results-found-text'>
           No search results found. Try searching for something a little less
-          creative. 😒
+          creative. <span role="img" aria-label="Annoyed Emoji">😒</span>
         </p>
       ) : null}
 
