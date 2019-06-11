@@ -531,17 +531,18 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .map-markers {
-  display: relative;
+  position: relative;
   display: flex;
   justify-content: center;
 }
 
 .loading-popup {
   position: absolute;
-  top: 50%;
-  left: 42%;
+  top: 20%;
+  left: 25%;
   background: white;
-  border-radius: 10px;
+  border: 3px solid #EEE;
+  border-radius: 25px;
   padding: 15px;
 }
 
@@ -640,6 +641,12 @@ input[type=range]:focus::-ms-fill-upper {
   .map-and-locations {
     flex-direction: column;
     height: 125vh;
+  }
+
+  .loading-popup {
+    position: fixed;
+    top: 40px;
+    left: 40px;
   }
 
   .location-list {
