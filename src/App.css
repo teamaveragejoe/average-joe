@@ -321,7 +321,7 @@ input[type=text] {
   margin: 0 auto;
 }
 
-.form-container button {
+form button {
   border: #3c3c3c 2px solid;
   border: #2b0058 2px solid;
   border-radius: 25px;
@@ -334,9 +334,8 @@ input[type=text] {
   transition: 0.3s ease;
 }
 
-.form-container button:hover {
+form button:hover {
   background: #d4cee8;
-  /* background: #93003d; */
 }
 
 /* CHECKBOX STYLING */
@@ -612,7 +611,7 @@ input[type=text]:disabled {
     font-size: 0.75rem;
   }
 
-  .form-container button {
+  form button {
     font-size: 0.8rem;
     width: 125px;
   }
