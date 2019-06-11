@@ -543,16 +543,13 @@ input[type=text]:disabled {
 
 /* WRITTEN DIRECTIONS */
 
-.direction-container {
-  width: 23%;
-  height: calc(100vw * 0.5*0.9);
-  background-color: #d4cee8E6;
-}
-
 .directions-list {
   overflow-y: auto;
   overflow-x: hidden;
   color: black;
+  width: 23%;
+  height: calc(100vw * 0.5*0.9);
+  background-color: #d4cee8E6;
 }
 
 .directions-list ol {
@@ -590,14 +587,11 @@ input[type=text]:disabled {
     width: 100%;
   }
 
-  .direction-container {
+  .directions-list {
+    text-align: center;
     width: 100%;
     height: auto;
     padding-bottom: 20px;
-  }
-
-  .directions-list {
-    text-align: center;
   }
 
 }

@@ -9,7 +9,7 @@ import Intro from './IntroDescription.js'
 import './App.css'
 
 class App extends Component {
-  constructor () {
+  constructor() {
     super()
 
     this.APIKEY = process.env.REACT_APP_API_KEY
@@ -258,7 +258,7 @@ class App extends Component {
             sort: 'relevance',
             circle: `${this.state.baseGeoLocation[1]}, ${
               this.state.baseGeoLocation[0]
-            }, ${this.state.range}`,
+              }, ${this.state.range}`,
             q: this.state.searchTerm,
             pageSize: 50
           }
@@ -379,7 +379,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     // Do the below as long as the search results aren't zero.
     if (this.state.searchResults.length > 0) {
       // Find which button is highlighted for the most 'average' location, aka the middle of the list
@@ -397,59 +397,55 @@ class App extends Component {
     }
   }
 
-  render () {
+  render() {
     return (
-      <div className='wrapper'>
-        <div className='App'>
-          <header>
-            <h1>Average Joe<span>😐</span></h1>
-          </header>
+      <div className='App wrapper'>
+        <header>
+          <h1>Average Joe<span>😐</span></h1>
+        </header>
 
-          <Intro style={this.state.intro} />
-          <div className='form-contact-contain'>
-            <div className='form-container'>
-              <Form
-                search={this.search}
-                base={this.state.base}
-                usingCurrent={this.state.usingCurrent}
-                range={this.state.range}
-                handleInput={this.handleInput}
-                handleEnter={this.handleEnter}
-                updateSliderRange={this.updateSliderRange}
-                getCurrentLocation={this.getCurrentLocation}
-                searchTerm={this.state.searchTerm}
-                toggleTouristMode={this.toggleTouristMode}
+        <Intro style={this.state.intro} />
+        <div className='form-container'>
+          <Form
+            search={this.search}
+            base={this.state.base}
+            usingCurrent={this.state.usingCurrent}
+            range={this.state.range}
+            handleInput={this.handleInput}
+            handleEnter={this.handleEnter}
+            updateSliderRange={this.updateSliderRange}
+            getCurrentLocation={this.getCurrentLocation}
+            searchTerm={this.state.searchTerm}
+            toggleTouristMode={this.toggleTouristMode}
+          />
+          <GeolocationLoading style={this.state.geolocationLoadingStyle} />
+        </div>
+        {this.state.showInfo ? (
+          <div className='content-container' ref={this.locationListRef}>
+            <div className='map-and-locations'>
+              <Locations
+                setDestination={this.setDestination}
+                searchResults={this.state.searchResults}
+                highlightedLocations={this.state.highlightedLocations}
+                touristMode={this.state.touristMode}
+                duplicateNames={this.state.duplicateNames}
+                areSearchResultsEmpty={this.state.areSearchResultsEmpty}
               />
-              <GeolocationLoading style={this.state.geolocationLoadingStyle} />
+
+              <Map
+                url={this.state.mapImageURL}
+                style={this.state.mapLoadingStyle}
+                touristMode={this.state.touristMode}
+              />
             </div>
-            {this.state.showInfo ? (
-              <div className='content-container' ref={this.locationListRef}>
-                <div className='map-and-locations'>
-                  <Locations
-                    setDestination={this.setDestination}
-                    searchResults={this.state.searchResults}
-                    highlightedLocations={this.state.highlightedLocations}
-                    touristMode={this.state.touristMode}
-                    duplicateNames={this.state.duplicateNames}
-                    areSearchResultsEmpty={this.state.areSearchResultsEmpty}
-                  />
 
-                  <Map
-                    url={this.state.mapImageURL}
-                    style={this.state.mapLoadingStyle}
-                    touristMode={this.state.touristMode}
-                  />
-                </div>
-
-                {this.state.showDirections ? (
-                  this.state.directions.length > 0 ? (
-                    <Directions directions={this.state.directions} />
-                  ) : null
-                ) : null}
-              </div>
+            {this.state.showDirections ? (
+              this.state.directions.length > 0 ? (
+                <Directions directions={this.state.directions} />
+              ) : null
             ) : null}
           </div>
-        </div>
+        ) : null}
       </div>
     )
   }
