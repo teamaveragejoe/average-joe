@@ -387,7 +387,7 @@ class App extends Component {
       // Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
       let topOffset =
         highlightButtonElement.offsetTop -
-        highlightButtonElement.offsetHeight * 4
+        highlightButtonElement.offsetHeight * 8
 
       // set the scroll of the location list div to the above values.
       document.getElementById('location-list-id').scrollTop = topOffset

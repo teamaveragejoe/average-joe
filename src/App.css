@@ -455,6 +455,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .content-container {
+  position: relative;
   display: flex;
   margin-bottom: 0px;
   justify-content: center;
@@ -515,7 +516,7 @@ input[type=range]:focus::-ms-fill-upper {
 .loading-popup {
   position: absolute;
   top: 20%;
-  left: 25%;
+  right: 40%;
   background: white;
   border: 3px solid #EEE;
   border-radius: 25px;
