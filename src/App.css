@@ -260,7 +260,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #fdfdfd; */
   color: #3c3c3c;
+  background-color: #ffffff;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc000080' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%2393003d80' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b80' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%2396004980' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b80' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%2397005780' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c80' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%2395006780' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c80' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%2391007780' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa80' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%2388008880' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;
 }
+
+
 
 .wrapper {
   width: 90%;
@@ -293,6 +299,12 @@ h1::after {
   left: 38%;
   height: 20%;
   z-index: -1;
+}
+
+.description p {
+  width: 70%;
+  margin: 50px auto 70px auto;
+  line-height: 1.5;
 }
 
 /* FORM SECTION */
@@ -365,7 +377,7 @@ input[type=text] {
   width: 200px;
   color: #3c3c3c;
   color: #2b0058;
-  background: transparent;
+  background: white;
   transition: 0.3s ease;
 }
 
@@ -402,6 +414,7 @@ input[type=range] {
   /* width: calc(100% - 60px); */
   margin: 8.3px 0;
   padding-top: 22px;
+  background: transparent;
 }
 input[type=range]:focus {
   outline: none;
@@ -499,7 +512,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .content-container {
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
   justify-content: center;
 }
 
