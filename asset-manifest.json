@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/average-joe/static/css/main.3cc0a265.chunk.css",
-    "main.js": "/average-joe/static/js/main.139ec25a.chunk.js",
-    "main.js.map": "/average-joe/static/js/main.139ec25a.chunk.js.map",
+    "main.css": "/average-joe/static/css/main.fee8390d.chunk.css",
+    "main.js": "/average-joe/static/js/main.7a5c952f.chunk.js",
+    "main.js.map": "/average-joe/static/js/main.7a5c952f.chunk.js.map",
     "runtime~main.js": "/average-joe/static/js/runtime~main.869af48d.js",
     "runtime~main.js.map": "/average-joe/static/js/runtime~main.869af48d.js.map",
     "static/js/2.919a1def.chunk.js": "/average-joe/static/js/2.919a1def.chunk.js",
     "static/js/2.919a1def.chunk.js.map": "/average-joe/static/js/2.919a1def.chunk.js.map",
     "index.html": "/average-joe/index.html",
-    "precache-manifest.975af88503d70cd40a2f303bb064ab45.js": "/average-joe/precache-manifest.975af88503d70cd40a2f303bb064ab45.js",
+    "precache-manifest.92f2129de8026d94195f2d13501aae79.js": "/average-joe/precache-manifest.92f2129de8026d94195f2d13501aae79.js",
     "service-worker.js": "/average-joe/service-worker.js",
-    "static/css/main.3cc0a265.chunk.css.map": "/average-joe/static/css/main.3cc0a265.chunk.css.map"
+    "static/css/main.fee8390d.chunk.css.map": "/average-joe/static/css/main.fee8390d.chunk.css.map"
   }
 }
