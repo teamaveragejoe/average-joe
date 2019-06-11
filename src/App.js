@@ -399,7 +399,7 @@ class App extends Component {
       <div className='wrapper'>
         <div className='App'>
           <header>
-            <h1>Average Joe</h1>
+            <h1>Average Joe<span>😐</span></h1>
           </header>
 
           <div className="description">
