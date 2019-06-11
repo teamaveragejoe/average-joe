@@ -248,6 +248,9 @@ h1::after {
   margin: 50px auto 70px auto;
   line-height: 1.5;
   text-align: center;
+  padding: 20px;
+  box-shadow: 0 0 5px 10px #93003d8c, inset 0 0 5px #2b005875;
+  font-weight: bold;
 }
 
 /*** FORM SECTION ***/
@@ -536,6 +539,12 @@ input[type=range]:focus::-ms-fill-upper {
 .directions-list {
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: #d4cee8d7;
+  color: black;
+}
+
+.directions-list ol {
+  padding-right: 10px;
 }
 
 .directions-list h3 {
