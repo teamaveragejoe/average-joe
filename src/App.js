@@ -404,49 +404,45 @@ class App extends Component {
           </header>
 
           <Intro style={this.state.intro} />
-          <div className='form-contact-contain'>
-            <div className='form-container'>
-              <Form
-                search={this.search}
-                base={this.state.base}
-                usingCurrent={this.state.usingCurrent}
-                range={this.state.range}
-                handleInput={this.handleInput}
-                handleEnter={this.handleEnter}
-                updateSliderRange={this.updateSliderRange}
-                getCurrentLocation={this.getCurrentLocation}
-                searchTerm={this.state.searchTerm}
-                toggleTouristMode={this.toggleTouristMode}
-              />
-              <GeolocationLoading style={this.state.geolocationLoadingStyle} />
-            </div>
-            {this.state.showInfo ? (
-              <div className='content-container' ref={this.locationListRef}>
-                <div className='map-and-locations'>
-                  <Locations
-                    setDestination={this.setDestination}
-                    searchResults={this.state.searchResults}
-                    highlightedLocations={this.state.highlightedLocations}
-                    touristMode={this.state.touristMode}
-                    duplicateNames={this.state.duplicateNames}
-                    areSearchResultsEmpty={this.state.areSearchResultsEmpty}
-                  />
+          <Form
+            search={this.search}
+            base={this.state.base}
+            usingCurrent={this.state.usingCurrent}
+            range={this.state.range}
+            handleInput={this.handleInput}
+            handleEnter={this.handleEnter}
+            updateSliderRange={this.updateSliderRange}
+            getCurrentLocation={this.getCurrentLocation}
+            searchTerm={this.state.searchTerm}
+            toggleTouristMode={this.toggleTouristMode}
+          />
+          <GeolocationLoading style={this.state.geolocationLoadingStyle} />
+          {this.state.showInfo ? (
+            <div className='content-container' ref={this.locationListRef}>
+              <div className='map-and-locations'>
+                <Locations
+                  setDestination={this.setDestination}
+                  searchResults={this.state.searchResults}
+                  highlightedLocations={this.state.highlightedLocations}
+                  touristMode={this.state.touristMode}
+                  duplicateNames={this.state.duplicateNames}
+                  areSearchResultsEmpty={this.state.areSearchResultsEmpty}
+                />
 
-                  <Map
-                    url={this.state.mapImageURL}
-                    style={this.state.mapLoadingStyle}
-                    touristMode={this.state.touristMode}
-                  />
-                </div>
-
-                {this.state.showDirections ? (
-                  this.state.directions.length > 0 ? (
-                    <Directions directions={this.state.directions} />
-                  ) : null
-                ) : null}
+                <Map
+                  url={this.state.mapImageURL}
+                  style={this.state.mapLoadingStyle}
+                  touristMode={this.state.touristMode}
+                />
               </div>
-            ) : null}
-          </div>
+
+              {this.state.showDirections ? (
+                this.state.directions.length > 0 ? (
+                  <Directions directions={this.state.directions} />
+                ) : null
+              ) : null}
+            </div>
+          ) : null}
         </div>
         <footer>
           <p>Project by Jeffrey Xu, Cheryl Leung, Adam Pachulski and Fazaa Ahmed.  Built using React JS.</p>
