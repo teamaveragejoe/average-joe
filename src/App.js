@@ -14,7 +14,7 @@ class App extends Component {
     this.APIKEY = process.env.REACT_APP_API_KEY
     this.displayNone = { display: 'none' }
     this.displayShow = { display: 'block' }
-    this.locationListRef = React.createRef();
+    this.locationListRef = React.createRef()
 
     // set initial location (blank)
     this.state = {
@@ -280,7 +280,6 @@ class App extends Component {
         this.setState({
           areSearchResultsEmpty: false
         })
-
       }
 
       // Find the most "average" location... aka highlight the middle result (or middle two results in the event of an even number of results)
@@ -298,13 +297,13 @@ class App extends Component {
         showInfo: true
       })
 
-      this.locationListRef.current.scrollIntoView({ 
-        behavior: "smooth", 
-        block: "nearest"
-     })
+      this.locationListRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      })
 
-      this.getDuplicateIndex();
-      this.getLocationsMapImage();
+      this.getDuplicateIndex()
+      this.getLocationsMapImage()
     } catch (err) {
       alert('Cannot perform search. An error has occured.')
     }
@@ -402,8 +401,16 @@ class App extends Component {
           <header>
             <h1>Average Joe</h1>
           </header>
-          <div className="description">
-            <p>Want to check out a new place, but not somewhere *too* great? Do you long for the days when you weren't excited about anything? This app is for you! Pick your location, then search for something you're interested in. You'll get the most middle-of-the-road place we can find in terms of relevance to your search, with directions on how to get there. With any luck, you'll have no strong feelings one way or the other!</p>
+          <div className='description'>
+            <p>
+              Want to check out a new place, but not somewhere *too* great? Do
+              you long for the days when you weren't excited about anything?
+              This app is for you! Pick your location, then search for something
+              you're interested in. You'll get the most middle-of-the-road place
+              we can find in terms of relevance to your search, with directions
+              on how to get there. With any luck, you'll have no strong feelings
+              one way or the other!
+            </p>
           </div>
           <div className='form-contact-contain'>
             <div className='form-container'>
@@ -422,11 +429,8 @@ class App extends Component {
               <GeolocationLoading style={this.state.geolocationLoadingStyle} />
             </div>
             {this.state.showInfo ? (
-              <div 
-                className='content-container'
-                ref={this.locationListRef}>
-                <div 
-                  className='map-and-locations'>
+              <div className='content-container' ref={this.locationListRef}>
+                <div className='map-and-locations'>
                   <Locations
                     setDestination={this.setDestination}
                     searchResults={this.state.searchResults}
@@ -443,13 +447,11 @@ class App extends Component {
                   />
                 </div>
 
-                <div className='direction-container'>
-                  {this.state.showDirections ? (
-                    this.state.directions.length > 0 ? (
-                      <Directions directions={this.state.directions} />
-                    ) : null
-                  ) : null}
-                </div>
+                {this.state.showDirections ? (
+                  this.state.directions.length > 0 ? (
+                    <Directions directions={this.state.directions} />
+                  ) : null
+                ) : null}
               </div>
             ) : null}
           </div>
