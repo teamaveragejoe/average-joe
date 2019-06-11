@@ -2,8 +2,9 @@
 
 @import url("https://fonts.googleapis.com/css?family=Lato:400,500|Teko:500&display=swap");
 
-/* SETUP SNIPPET */
-
+/******************************************************************
+** SETUP SNIPPET 
+******************************************************************/
 article,
 aside,
 details,
@@ -153,15 +154,6 @@ input::-moz-focus-inner {
   padding: 0;
 }
 
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: "";
-  clear: both;
-  height: 0;
-}
-
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -181,7 +173,9 @@ input::-moz-focus-inner {
   overflow: hidden;
 }
 
-/*** GENERAL ***/
+/******************************************************************
+** GENERAL
+******************************************************************/
 
 html {
   font-size: 115%;
@@ -216,8 +210,11 @@ p, h4 {
   margin: 0 auto;
 }
 
-/* HEADER  */
 
+
+/******************************************************************
+** HEADER
+******************************************************************/
 h1 {
   text-align: center;
   margin: 0 auto;
@@ -261,8 +258,11 @@ h1 span {
   box-shadow: 16px 16px 0px -2px rgba(252,225,171,1);
 }
 
-/*** FORM SECTION ***/
 
+
+/******************************************************************
+** FORM
+******************************************************************/
 button {
   border: none;
   background: white;
@@ -297,15 +297,15 @@ input[type=range] {
 @media (max-width: 1250px) {
   input[type=text],
   input[type=range] {
-  width: calc(100% - 70px)
-}
+    width: calc(100% - 70px)
+  }
 }
 
 @media (max-width: 1100px) {
   input[type=text],
   input[type=range] {
-  width: calc(100% - 50px)
-}
+    width: calc(100% - 50px)
+  }
 }
 
 input[type=text] {
@@ -314,7 +314,6 @@ input[type=text] {
   border: none;
   border-bottom: #93003d solid 2px;
   text-align: center;
-  /* width: calc(100% - 60px); */
 }
 
 .form-button {
@@ -357,13 +356,14 @@ form button:hover {
 }
 
 
-/* SLIDER STYLING */
+/******************************************************************
+** SLIDER
+******************************************************************/
 
 /* styling done through tool on http://danielstern.ca/range.css/#/ */
 
 input[type=range] {
   -webkit-appearance: none;
-  /* width: calc(100% - 60px); */
   margin: 8.3px 0;
   padding-top: 22px;
   background: transparent;
@@ -453,8 +453,12 @@ input[type=text]:disabled {
   background: rgb(238, 238, 238);
   color: #3F3F3F;
 }
-/* MAP AND LOCATIONS SECTION */
 
+
+
+/******************************************************************
+** MAP & LOCATION LIST
+******************************************************************/
 .geolocator-loading-prompt {
   background: white;
   border: 1px solid red;
@@ -477,24 +481,13 @@ input[type=text]:disabled {
   display: flex;
   width: 95%;
   justify-content: space-between;
-  /* height: 70vh; */
-
 }
 
-/* .location-list {
-  width: 40%;
-  overflow-y: auto;
-  overflow-x: hidden;
-} */
-
 .location-list {
-    /* width: 30%; */
     width: calc(100% - (100vw * 0.5*0.9));
     height: calc(100vw * 0.5*0.9);
     overflow-y: auto;
     overflow-x: hidden;
-    /* height: 82%;
-    margin-top: 8%; */
   }
 
 .location-list button {
@@ -522,7 +515,7 @@ input[type=text]:disabled {
 
 .map-markers img {
   max-width: 100%;
-  /* width: 100%; */
+  width: 100%;
 }
 
 .loading-popup {
@@ -535,13 +528,11 @@ input[type=text]:disabled {
   padding: 15px;
 }
 
-.map-markers img {
-  max-height: 100%;
-  object-fit: contain;
-}
 
-/* WRITTEN DIRECTIONS */
 
+/******************************************************************
+** DIRECTION LIST
+******************************************************************/
 .directions-list {
   overflow-y: auto;
   overflow-x: hidden;
@@ -568,6 +559,10 @@ input[type=text]:disabled {
 }
 
 
+
+/******************************************************************
+** MEDIA QUERY
+******************************************************************/
 @media (max-width: 1204px) {
 
   .map-markers {
@@ -617,7 +612,6 @@ input[type=text]:disabled {
   }
 }
 
-
 @media (max-width: 850px) {
 
   h1 {
@@ -641,7 +635,6 @@ input[type=text]:disabled {
 
   .map-and-locations {
     flex-direction: column;
-    /* height: 125vh; */
   }
 
   .loading-popup {
