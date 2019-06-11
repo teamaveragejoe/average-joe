@@ -385,12 +385,10 @@ class App extends Component {
       )
 
       // Since the highlighted button is scrolled just past the top of the div, subtract the button height times 4 (seemed like a good value when tested) to push the scroll back to where we can see the highlighted buttons
-      let topOffset =
-        highlightButtonElement.offsetTop -
-        highlightButtonElement.offsetHeight * 8
+      let topOffset = highlightButtonElement.offsetTop;
 
       // set the scroll of the location list div to the above values.
-      document.getElementById('location-list-id').scrollTop = topOffset
+      document.getElementById('location-list-id').scrollTop = topOffset;
     }
   }
 
@@ -449,6 +447,9 @@ class App extends Component {
             ) : null}
           </div>
         </div>
+        <footer>
+          <p>Project by Jeffrey Xu, Cheryl Leung, Adam Pachulski and Fazaa Ahmed. Built using React JS.</p>
+        </footer>
       </div>
     )
   }
