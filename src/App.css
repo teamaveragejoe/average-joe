@@ -572,8 +572,15 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 footer {
-  background-color: black;
+  /* background-color: rgba(0,0,0,0.4); */
+  margin-top: 20px;
+  background: linear-gradient(to right, rgba(179,220,237,0) 0%,rgba(0,0,0,0.8) 30%,rgba(0,0,0,0.8) 70%,rgba(188,224,238,0.2) 100%);
   color: white;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
   font-size: 75%;
   line-height: 30px;
   height: 30px;
@@ -674,6 +681,12 @@ footer {
 
   .map-markers {
     width: 100%;
+  }
+
+  footer {
+    font-size: 60%;
+    line-height: 15px;
+    height: auto;
   }
 
 }

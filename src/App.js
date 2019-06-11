@@ -449,7 +449,7 @@ class App extends Component {
           </div>
         </div>
         <footer>
-          <p>Project by Jeffrey Xu, Cheryl Leung, Adam Pachulski and Fazaa Ahmed. Built using React JS.</p>
+          <p>Project by Jeffrey Xu, Cheryl Leung, Adam Pachulski and Fazaa Ahmed.  Built using React JS.</p>
         </footer>
       </div>
     )
