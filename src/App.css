@@ -1,6 +1,6 @@
 /* FONTS */
 
-@import url("https://fonts.googleapis.com/css?family=Lato|Teko:500&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,500|Teko:500&display=swap");
 
 /* SETUP SNIPPET */
 
@@ -192,9 +192,8 @@ body {
   font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #3c3c3c;
-  /* background-color: #ffffff; */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc000080' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%2393003d80' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b80' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%2396004980' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b80' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%2397005780' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c80' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%2395006780' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c80' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%2391007780' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa80' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%2388008880' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+  color: #000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc00004D' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%2393003d4D' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b4D' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%239600494D' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b4D' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%239700574D' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c4D' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%239500674D' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c4D' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239100774D' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa4D' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%238800884D' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
   background-attachment: fixed;
   background-size: cover;
   /* padding-bottom: 50px; */
@@ -257,6 +256,12 @@ h1 span {
   margin: 50px auto 70px auto;
   line-height: 1.5;
   text-align: center;
+  font-weight: 500;
+  padding: 20px;
+  background: #fcf2db;
+  -webkit-box-shadow: 16px 16px 0px -2px rgba(252,225,171,1);
+  -moz-box-shadow: 16px 16px 0px -2px rgba(252,225,171,1);
+  box-shadow: 16px 16px 0px -2px rgba(252,225,171,1);
 }
 
 /*** FORM SECTION ***/
@@ -305,8 +310,6 @@ input[type=range] {
   width: calc(100% - 50px)
 }
 }
-
-/* **desktop design breaks around 1000px** */
 
 input[type=text] {
   padding: 10px;
@@ -486,8 +489,8 @@ input[type=range]:focus::-ms-fill-upper {
 
 .location-list {
     /* width: 30%; */
-    width: calc(100% - (100vw * 0.50*0.9));
-    height: calc(100vw * 0.50*0.9);
+    width: calc(100% - (100vw * 0.5*0.9));
+    height: calc(100vw * 0.5*0.9);
     overflow-y: auto;
     overflow-x: hidden;
     /* height: 82%;
@@ -510,11 +513,11 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .tourist-mode-button {
-  background-color: lightyellow;
+  background-color: #fcf2db;
 }
 
 .map-markers {
-  width: calc(100vw * 0.50*0.9)
+  width: calc(100vw * 0.5*0.9)
 }
 
 .map-markers img {
@@ -541,11 +544,18 @@ input[type=range]:focus::-ms-fill-upper {
 
 .direction-container {
   width: 23%;
+  height: calc(100vw * 0.5*0.9);
+  background-color: #d4cee8E6;
 }
 
 .directions-list {
   overflow-y: auto;
   overflow-x: hidden;
+  color: black;
+}
+
+.directions-list ol {
+  padding-right: 10px;
 }
 
 .directions-list h3 {
@@ -591,6 +601,8 @@ footer {
 
   .direction-container {
     width: 100%;
+    height: auto;
+    padding-bottom: 20px;
   }
 
   .directions-list {

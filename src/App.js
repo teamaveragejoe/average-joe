@@ -5,6 +5,7 @@ import Map from './Map.js'
 import Locations from './Locations.js'
 import Directions from './Directions.js'
 import GeolocationLoading from './GeolocationLoading'
+import Intro from './IntroDescription.js'
 import './App.css'
 
 class App extends Component {
@@ -34,7 +35,8 @@ class App extends Component {
       showInfo: false,
       showDirections: false,
       touristMode: false,
-      duplicateNames: {}
+      duplicateNames: {},
+      intro: this.displayShow
     }
   }
 
@@ -294,7 +296,8 @@ class App extends Component {
       this.setState({
         searchResults: results,
         highlightedLocations: highlightedLocations,
-        showInfo: true
+        showInfo: true,
+        intro: this.displayNone
       })
 
       this.locationListRef.current.scrollIntoView({
@@ -400,9 +403,7 @@ class App extends Component {
             <h1>Average Joe<span>😐</span></h1>
           </header>
 
-          <div className="description">
-            <p>Want to check out a new place, but not somewhere <em>too</em> great? Do you long for the days when you weren't excited about anything? This app is for you! Pick your location, then search for something you're interested in. You'll get the most middle-of-the-road place we can find in terms of relevance to your search, with directions on how to get there. With any luck, you'll have no strong feelings one way or the other!</p>
-          </div>
+          <Intro style={this.state.intro} />
           <div className='form-contact-contain'>
             <div className='form-container'>
               <Form
