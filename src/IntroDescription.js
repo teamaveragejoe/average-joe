@@ -8,7 +8,7 @@ function Intro (props) {
         you long for the days when you weren't excited about anything? This app
         is for you! Pick your location, then search for something you're
         interested in. You'll get the most middle-of-the-road place we can find
-        in terms of relevance to your search, with directions on how to get
+        in terms of relevance to your search that will be highlighted in purple in the results list, with directions on how to get
         there. With any luck, you'll have no strong feelings one way or the
         other!
       </p>
